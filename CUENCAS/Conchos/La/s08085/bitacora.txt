@@ -1,0 +1,5 @@
+el outlier 1999 6 19 fue modificado por -99.9 ya que no se pudo verificar su autenticidad
+el outlier 2002/6/11 fue modificado por -99.9 ya que no se pudo verificar su autenticidad
+el outlier 2007/6/11 fue modificado por -99.9 ya que no se pudo verificar su autenticidad
+el outlier 2010/7/31 fue modificado por -99.9 ya que no se pudo verificar su autenticidad
+el outlier 1973/8/1 fue modificado por -99.9 ya que no se pudo verificar su autenticidad

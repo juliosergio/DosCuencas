@@ -1,0 +1,7 @@
+outliers con correcion 
+1982/1/11 se verificó con estaciones vecinas y se dejo como dato faltante 
+1979/6/24 se verificó con estaciones vecinas y se dejo como dato faltante
+1976/11/11 se registró un salto en tx verificando con dias posteiores y anteriores se dio validez al salto
+1976/11/28 se registró un salto en tx verificando con dias posteiores y anteriores, asi como estaciones vecinas se dio validez al salto
+1980/4/11 se registró un salto en tx verificando con estaciones vecinas se da validez al salto 
+1983/12/23 se registró un salto en tx  verificando con dias posteiores y anteriores, asi como estaciones vecinas se dio validez al salto

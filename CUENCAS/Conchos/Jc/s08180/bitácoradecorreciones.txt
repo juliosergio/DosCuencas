@@ -1,0 +1,24 @@
+1982/1/11 el outlier en pc up fue modificado.
+1972/3/6 el outlier en pc up fue modifcado
+Los siguientes outliers fueron de pc up fueron modificados 
+1982/1/11
+1972/3/6
+1976/5/17
+1984/6/16
+1986/6/22
+1973/7/14
+1973/7/28
+1978/8/4
+1975/9/21
+1974/10/23
+1986/10/4
+1983/4/7 el outlier tx low fue modificado 
+1982/1/22 el outlier de tn up fue modificado 
+1975/12/14 el outlier de tn up fue modificado 
+1977/4/27 el jump fue modificado por sospecha de error de dedo
+1983/12/23 el jump fue modificado por sospecha de error de dedo 
+
+	
+
+
+

@@ -1,0 +1,6 @@
+1982/1/10 se corregio el valor de outlier de pc up y se sustituyo con -99.9
+1984/1/30 se corregio el valor de outlier de pc up y se sustituyo con -99.9
+1981/5/2  se corregio el valor de outlier de pc up y se sustituyo con -99.9
+los jumps  se verifican y se corroboran que son correctos 
+
+

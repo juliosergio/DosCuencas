@@ -1,0 +1,9 @@
+EL outlier de la fecha 2011/2/3  con valor de -7 en temperatura máxima se decidé dejar correcto ya que se verifica con los días posteriores y es muy posible que se llegare a presentar. 
+EL outlier de la fecha 2011/2/3  con valor de -15 en temperatura miníma se decidé dejar correcto ya que se verifica con los días posteriores y es muy posible que se llegare a presentar.
+EL outlier de la fecha 2011/2/4  con valor de -13 en temperatura miníma se decidé dejar correcto ya que se verifica con los días posteriores y es muy posible que se llegare a presentar.
+EL outlier de la fecha 2008/7/20  con valor de 11 en temperatura miníma se decidé dejar correcto ya que se verifica con los días posteriores y es muy posible que se llegare a presentar.
+En 2013/11/22 la tx y tn fue la misma no se pudo verificar y reanalisis no lo marcaba así, por lo tanto se determinó dejarla como dato faltante.
+Se modificaron todos los valoress de tn flatline y tx flatline 
+En 1997 1/5 se registro una diferencia de 20 grados se verifico con años anteriores y con reanalisis y se determino que fue un valor correcto.
+ 
+

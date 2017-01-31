@@ -1,0 +1,26 @@
+el outlier de 2013/7/17 se conservo ya que en los dias anteriores y posteiores se observaron datos similares 
+el outlier de 1996/8/29 se conservo ya que existian valores en otros días que daban validez a este
+2003/10/9 se conservo ya que existian valores en otros días que daban validez a este
+2003/10/11 se conservo ya que existian valores en otros días que daban validez a este
+2004/11/15 se conservo ya que en el siguiente día se registro un valor similar que pudiera dar validez a este valor
+2004/11/16 se conservo ya que en el anterior día se registro un valor similar que pudiera dar validez a este valor
+los demas outliers en pc up se modificaron por valor faltante debido a falta de validez 
+1989/3/7 se modificó por valor faltante por falta de validez por -99.9
+1973/4/5 se modificó por valor faltante por falta de validez por -99.9
+1982/4/22 se modificó por valor faltante por falta de validez por -99.9
+1983/4/7 se modificó por valor faltante por falta de validez por -99.9
+2007/4/7 se modificó por valor faltante por falta de validez por -99.9
+1976/10/28 se modificó por valor faltante por falta de validez por -99.9
+los demas outliers de tx low se dejaron igual 
+1985/6/5 se modificó por un valor faltante por falta de valizez por -99.9
+los outliers de tn low que se presentaron entre el periodo 1973/7/29 al 1986/8/21 fueron modificados debido a falta de válidez por valor de datos faltante -99.9
+1986/11/12 el jump en esa fecha se cambio por falta de válidez del mismo y por la comparación de la estación vecina.
+2013/11/15 se modifico ese salto ya que no había validez por el cual se realizo ese salto 
+los flatlines de tx y tn fueron corregidos.
+
+
+
+ 
+
+
+

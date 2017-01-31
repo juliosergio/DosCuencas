@@ -1,0 +1,3 @@
+Los siguientes outlier de pc up fueron sustituidos por dato faltante -99.9
+1975/1/22 
+

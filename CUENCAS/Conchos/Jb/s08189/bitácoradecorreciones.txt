@@ -1,0 +1,8 @@
+1977/7/9 el outlier en precipitación se modificó ya que se verificó con estaciones vecinas y no se valido el dato 
+1974/12/26  el outlier en precipitación se modificó ya que se verificó con estaciones vecinas y no se valido el dato 
+1973/11/2 el outlier de tn up se modificó ya que no se encontró valor parecido en estaciones vecinas. 
+1973/11/4 el outlier de tn up se modificó ya que no se encontró valor parecido en estaciones vecinas.  
+1978/12/7 se verficó el jump en tx y se corroboró con los dias siguientes dando validez a este salto.
+
+
+

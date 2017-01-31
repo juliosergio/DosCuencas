@@ -1,0 +1,10 @@
+pc up
+1979 5 18 43 18 11 7
+1983 7 20 44 22 10 12
+tx up
+tx low
+1984 8 17 11 15 4 11
+tn up
+tn low
+tr up
+tr low

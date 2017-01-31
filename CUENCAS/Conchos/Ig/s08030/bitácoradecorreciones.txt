@@ -1,0 +1,33 @@
+outlier siguiente se respetó debido al análisis de dias anterios y posteriores 1965 3 2 0 -4 -7 3
+outlier siguiente se respetó debido al análisis de dias anterios y posteriores 1983 4 5 10 2.5 0 2.5
+                                                                               1983 4 5 10 2.5 0 2.5
+                                                                               1983 4 6 5.2 0.5 -2 2.5
+                                                                               1983 4 7 1.8 1.5 -0.5 2
+outlier siguiente se cambio ya que se sospecha que fue error al teclear 1935 5 4 10.2
+                                                                        1970 9 28 12.5 
+                                                                        1979 9 15 13.1 
+                                                                        1931 8 22 7.8 
+                                                                        1931 8 23 8
+los demas outlier se sustituyeron con -99.9
+el dato de temperarde la siguiente fecha 1945 3 6 fue de 0 por 4 veces por lo cual se modifico por -99.9 sus repeticiones 
+el dato de la siguiente fecha 1955 8 4 fue de 22 por 4 veces por lo cual se modifico por -99.9 sus repeticiones 
+                              1955 9 29       17     
+                              1955 10 21      10 
+                              1955 12 13       0
+                              1956  8 27      20
+                              1956 12 9        6
+                              1956  2 6        5
+En 1956/6/6 se cambio el valor de 2 por 20 en tn 
+en 1955/3/26 se registró un valor de Temp. máxima de 6 el y una miníma de -4, en el día anterior se registro una max de 27 grados y una miníma de -4 en día posteriores se registraron temperaturas máximas cercas al valor de 6 grados por lo tanto se de decide que el dato es correcto. 
+En 1974/12/7 se registró un valor de temp máx de 34 grados cosa que contrastaba  con los valores de los dias anteriores y posteriores no se pudo identificar error de dedo, por lo tanto se puso como dato faltante.
+En 1980/4/12 se registró 4 de valor de temp máx cosa que no concordaba con los dias circundantes por lo cual se verificó posible error de dedo con posible diferencia de 24 grados por lo cual se decidió poner como dato faltante.
+En 1982/11/24 se verifico el dato con los días anteriores y posteriores y por comportamiento similar dias posteriores se concluyó que fue un dato verdadero.
+
+
+
+                                
+
+
+
+ 
+

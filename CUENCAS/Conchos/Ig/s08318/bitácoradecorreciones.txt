@@ -1,0 +1,11 @@
+se reviso los outliers y se clasificó cuales eran verdaderos 
+valores repitodos 1978/11/16 se verificó con la estación 8030 y se decidió dejar así en base a la coerencia de valores de tn.
+Se rectificó en 1979/2/11 ya que tn -5 se repetía tres veces se sustuyo -99.9
+Se rectificó en 1979/8/4 tn de se -19 repetía 4 veces se sustuyo -99.9
+Se rectifico valor en 1978/12/14 12 se repetia 4 veces se sustuyo -99.9
+Se rectifico valor en 1979/8/9 34 se repetia 4 veces se sustuyo -99.9
+Se rectifico valor en 1980/5/8 29 se repetia 4 veces se sustuyo -99.9
+Se rectifico valor en 1984/5/7 32 se repetia 4 veces se sustuyo -99.9
+Se rectifico valor en 1985/7/29 32 se repetia 5 veces se sustuyo -99.9
+Se rectifico valor en 1985/9/11 31.5 se repetia 4 veces se sustuyo -99.9
+

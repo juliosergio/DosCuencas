@@ -1,0 +1,7 @@
+los siguientes outliers de pc up se modificaron por falta de sustento a valor faltante -99.9
+1986/6/23 
+1986/6/25
+1978/10/23
+los siguiente outliers de tx low se modificaron por falta de sustento a valor faltante -99.9
+1973/7/5 el siguiente outlier de tx low se modificaron por falta de sustento a valor faltante -99.9
+1986/8/29 el siguiente outlier de tn low se modificaron por falta de sustento a valor faltante -9

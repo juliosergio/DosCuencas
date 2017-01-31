@@ -1,0 +1,12 @@
+los outliers en precipitación no hubo manera de comprobarlos por lo tanto fueron sustituidos por -99.9
+los outliers en tn up se verificaron segun los datos anteriores y posteriores y se validaron
+los outliers en tn up se verificaron segun los datos anteriores y posteriores y se validaron
+los valores del archivo tmax y tmín se corregieron ya que presentaban los mismos valores prueba de un relleno de datos 
+1999/10/31 el valor de esa fecha fue corregida por posible error de medición
+los demas jumps fueron validados por dias anteriores y posteriores
+1987/12/13 el jump en tx fue sustituido por -99.9 debido a falta de sustento 
+1992/11/3 el jump en tx fue sustituido por -99.9 debido a falta de sustento
+1992/12/12 el jump en tx fue sustituido por -99.9 debido a falta de sustento
+los demas jumps en tx fueron validados 
+
+

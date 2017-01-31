@@ -1,0 +1,2 @@
+en los datos de tmaxtmin se aplicaron cambios ya que en lagunos valore se repetian por relleno de datos 
+1956/2//2 se corrigio el salto de temperatura y se sutituyo con valor faltante ya que no se pudo justificar 

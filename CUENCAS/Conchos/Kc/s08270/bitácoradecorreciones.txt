@@ -1,0 +1,28 @@
+los siguientes outlier de precipitacion fueron modificados y sustituidos por dato faltante -99.9
+2002/3/1
+1988/7/31
+2008/8/30
+1975/9/4
+1975/9/5
+2012/9/13
+Los outliers de tx low fueron modificados por -99.9 valor faltante 
+2002/5/1
+2002/5/5
+2002/5/17
+2003/5/3
+2003/5/5
+2003/5/17
+1991/9/20
+2000/10/9
+Los outliers de tn up fueron modificados por -99.9 valor faltante 
+2011/2/27
+1982/11/27 fue modificado el valor de tx ya que se sospecha posible error de relleno de datos
+1994/11/3 el valor de tn fue modificado por sospecha de relleno de datos
+2007/11/1 el valor fue modificado por sospecha de relleno de datos 
+ 
+
+
+
+
+
+

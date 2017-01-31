@@ -1,0 +1,5 @@
+1981/1/18 el outlier de precipitación se sustituyó con -99.9
+1977/7/13 el outlier de tn low se sustituyó con -99.9
+1977/7/15 el outlier de tn low se sustituyó con -99.9
+los flatlines de temperatura máx se verificaron por lo días posteriores y anteriores y por las estaciones vecinas y se decidió que todos eran correctos 
+

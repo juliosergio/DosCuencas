@@ -1,0 +1,3 @@
+1972/2/7 el outlier en pc up fue modificado ya que no se pudo confirmar con estaciones vecinas.
+los demas outlier se respetarón por un analisis de dias anteriores y posteriores, analisando precipitacion y temperatura máx.
+
