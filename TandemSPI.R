@@ -20,15 +20,48 @@ source("spi_functions.R")
 
 # library("ncdf4")
 
+# Leemos el archivo que contiene los datos:
+fn <- mustGet("Archivo de datos (csv)->") # Por ejmplo ConchosPRE_mm.csv
+k <- as.numeric(mustGet("Período SPI (meses):"))
+# La tabla de datos:
+dd <- read.csv(fn, row.names = 1)
 
-ncname <- "CLICOM_pre_1960-2008_mm"  
-ncfname <- paste("CLICOMg/",ncname,".nc", sep="")
-#outname <- "ccg_usumacinta_allmes.csv"
-dname <- "pre" 
+# Averigüemos los incrementos y los mínimos en x y y
+xx <- unique(sort(as.numeric(dd["Lon",])))
+yy <- unique(sort(as.numeric(dd["Lat",])))
 
-# open a netCDF file
-ncin <- nc_open(ncfname)
-print(ncin)
+stat.mode <- function(x) {tt <- table(x); as.numeric(names(tt)[which.max(tt)])}
+get.dif <- function(x) stat.mode(x-lag(x))
+
+dx <- get.dif(xx)
+dy <- get.dif(yy)
+
+mx <- min(xx)
+my <- min(yy)
+
+# Exclusivamente las series de datos:
+sdd <- dd[-(1:2),] # Se eliminan coordenadas
+# número de renglones:
+n <- nrow(sdd)
+
+# n debe ser par
+n <- if (n%%2) n-1 else n
+n2 <- n/2
+
+# Se divide cada serie a la mitad se calcula para cada punto dos SPIs
+# (uno para cada sub-serie), y creamos la salida con las coordenadas 
+# y cada esos dos valores
+
+spi0 <- as.data.frame(sapply(sdd[1:n2,], function(ss) getSPIfor_k(ss,k)))
+rownames(spi0) <- rownames(sdd)[1:n2]
+spi1 <- as.data.frame(sapply(sdd[(n2+1):n,], function(ss) getSPIfor_k(ss,k)))
+rownames(spi1) <- rownames(sdd)[(n2+1):n]
+
+Mbrk <- c(-2.5,-2,-1.5,-1,1,1.5,2,2.5)
+hh0 <- sapply(spi0, hist, breaks=Mbrk, plot=F)
+hh1 <- sapply(spi1, hist, breaks=Mbrk, plot=F)
+
+
 
 lons <- ncvar_get(ncin,"longitude")
 nlon <- dim(lons)
