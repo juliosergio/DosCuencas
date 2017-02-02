@@ -1,4 +1,4 @@
-###################################################
+s###################################################
 # TandemSPI.R
 #     Aplica el calclulo del SPI a un conjunto de
 #     puntos, c/u de los cuales tiene asociada una
@@ -30,7 +30,11 @@ dd <- read.csv(fn, row.names = 1)
 xx <- unique(sort(as.numeric(dd["Lon",])))
 yy <- unique(sort(as.numeric(dd["Lat",])))
 
-stat.mode <- function(x) {tt <- table(x); as.numeric(names(tt)[which.max(tt)])}
+#YA-NO>>> stat.mode <- function(x) {tt <- table(x); as.numeric(names(tt)[which.max(tt)])} # Moda de una serie
+id.mode <- function(tt) as.numeric(names(tt)[which.max(tt)])  # identifica la moda en una tabla de fecuencias
+# La moda de una serie de datos es la composición de la función table(), que calcula las frecuencias
+# en la serie, con id.mode()
+stat.mode <- id.mode %cmp% table # stat.mode(x) donde x es la serie de datos
 get.dif <- function(x) stat.mode(x-lag(x))
 
 dx <- get.dif(xx)
@@ -39,23 +43,33 @@ dy <- get.dif(yy)
 mx <- min(xx)
 my <- min(yy)
 
-# Exclusivamente las series de datos:
-sdd <- dd[-(1:2),] # Se eliminan coordenadas
-# número de renglones:
-n <- nrow(sdd)
+# Para partir la tabla en años exactos
 
-# n debe ser par
-n <- if (n%%2) n-1 else n
-n2 <- n/2
+nm <- nrow(dd) - 2 # Número total de meses
+na <- floor(nm/12) # Número de años completos
+# Tenemos que asegurarnos que na sea par:
+na <- if (na%%2) na-1 else na
+# El número de meses efectivos que se tratarán:
+ne <- na*12
+
+# Exclusivamente las series de datos, ajustando
+# también al número de meses efectivos
+sdd <- dd[3:(ne+2),] # Se eliminan coordenadas y meses extra
+
+
+# ne es par
+
+n2 <- ne/2
 
 # Se divide cada serie a la mitad se calcula para cada punto dos SPIs
 # (uno para cada sub-serie), y creamos la salida con las coordenadas 
 # y cada esos dos valores
 
-spi0 <- as.data.frame(sapply(sdd[1:n2,], function(ss) getSPIfor_k(ss,k)))
-rownames(spi0) <- rownames(sdd)[1:n2]
-spi1 <- as.data.frame(sapply(sdd[(n2+1):n,], function(ss) getSPIfor_k(ss,k)))
-rownames(spi1) <- rownames(sdd)[(n2+1):n]
+spiX <- as.data.frame(sapply(sdd, function(ss) getSPIfor_k(ss,k)))
+rownames(spiX) <- rownames(sdd)
+# Particionamos en dos conjuntos:
+spi0 <- spiX[1:n2,]
+spi1 <- spiX[(n2+1):ne,]
 
 Mbrk <- c(-2.5,-2,-1.5,-1,1,1.5,2,2.5)
 hh0 <- sapply(spi0, hist, breaks=Mbrk, plot=F)
