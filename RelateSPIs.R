@@ -1,8 +1,6 @@
 ###################################################
-# TandemSPI.R
-#     Aplica el calclulo del SPI a un conjunto de
-#     puntos, c/u de los cuales tiene asociada una
-#     serie de tiempo (mensual) de precipitaciones
+# RelateSPIs.R
+#     
 ################################################
 
 ###################################################
@@ -10,14 +8,10 @@
 # Joseph Wheatley Biospherica March 2010
 ################################################
 
-
-source("spi_functions.R")
-#debugSource("spi_functions.R") # Si se quiere correr esta parte con debbuger
+if (!exists("LEIDO.MiBiblioteca")) source("RR/MiBiblioteca.R", chdir = T)
 
 # Leemos el archivo que contiene los datos:
-fn <- mustGet("Archivo de datos (csv)->") # Por ejmplo ConchosPRE_mm.csv
-prefix <- strsplit(fn, ".csv", fixed = T)[[1]]
-
+prefix <- mustGet("Nombre genérico de los archivos (csv)->") # Por ejemplo ConchosPRE_mm
 
 k <- as.numeric(mustGet("Período SPI (meses):"))
 # La tabla de datos:
