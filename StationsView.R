@@ -7,7 +7,7 @@
 # ===================================================
 library(sp)
 library(ncdf4)
-if (!exists("LEIDO.MiBiblioteca")) source("../RR/MiBiblioteca.R", chdir = T)
+if (!exists("LEIDO.MiBiblioteca")) source("RR/MiBiblioteca.R", chdir = T)
 # source("Fechas.R")
 
 # Lectura NetCDF

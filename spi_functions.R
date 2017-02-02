@@ -3,7 +3,7 @@
 # Joseph Wheatley Biospherica March 2010
 ################################################
 
-if (!exists("LEIDO.MiBiblioteca")) source("../RR/MiBiblioteca.R", chdir = T)
+if (!exists("LEIDO.MiBiblioteca")) source("RR/MiBiblioteca.R", chdir = T)
 
 
 getPrecOnTimescale <- function(precipitation,k){
