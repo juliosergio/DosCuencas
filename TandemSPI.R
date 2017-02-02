@@ -103,6 +103,11 @@ E_spi1 <- rbind(
     h1
 )
 
+# Finalmente guardemos esas estructuras en sendos archivos utilizables
+# posteriormente
+
+write.csv(E_spi0, file = paste0(prefix, "_SPI0.csv"), row.names = T)
+write.csv(E_spi1, file = paste0(prefix, "_SPI1.csv"), row.names = T)
 
 
 
