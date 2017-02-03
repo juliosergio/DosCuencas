@@ -1,11 +1,7 @@
 ###################################################
 # RelateSPIs.R
-#     
-################################################
-
-###################################################
-# Standardized Precipitation Index
-# Joseph Wheatley Biospherica March 2010
+#     Relaciona punto a punto los SPIs contenidos en 
+#     dos archivos producidos por TandemSPI.R
 ################################################
 
 if (!exists("LEIDO.MiBiblioteca")) source("RR/MiBiblioteca.R", chdir = T)
@@ -18,21 +14,6 @@ fnams <- paste0(prefix, c("_SPI0.csv", "_SPI1.csv"))
 E_spi0 <- read.csv(fnams[1], row.names = 1)
 E_spi1 <- read.csv(fnams[2], row.names = 1)
 
-# Averigüemos los incrementos y los mínimos en x y y
-xx <- unique(sort(as.numeric(E_spi0["Lon",])))
-yy <- unique(sort(as.numeric(E_spi0["Lat",])))
-
-id.mode <- function(tt) as.numeric(names(tt)[which.max(tt)])  # identifica la moda en una tabla de fecuencias
-# La moda de una serie de datos es la composición de la función table(), que calcula las frecuencias
-# en la serie, con id.mode()
-stat.mode <- id.mode %cmp% table # stat.mode(x) donde x es la serie de datos
-get.dif <- function(x) stat.mode(x-lag(x))
-
-dx <- get.dif(xx)
-dy <- get.dif(yy)
-
-rx <- range(xx)
-ry <- range(yy)
 
 # Extracción de la información que nos interesa en las tablas
 ii0 <- grepl("\\(.*\\]", rownames(E_spi0))
@@ -44,4 +25,10 @@ h1 <- E_spi1[ii1,]
 # Cálculo de los índices de cambio:
 
 indC <- (h1-h0)/(h1+h0)
+
+# Guardamos los resultados
+
+write.csv(rbind(E_spi0[1:2,], indC), file = prefix %+% "_indC.csv", row.names = T)
+
+
 
