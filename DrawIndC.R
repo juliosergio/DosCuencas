@@ -86,7 +86,7 @@ if (resp == "1")
 } else {
     # dev.off()
     # Mbreaks <- seq(100, 200, by=10) # Son 10 intervalos
-    Mcols <- colorRampPalette(c("darkred","red","yellow","white","green","blue","darkblue"),space="rgb")
+    Mcols <- colorRampPalette(c("darkred","red","yellow","cornsilk2","green","blue","darkblue"),space="rgb")
     filled.contour(lasx,lasy,dd,col=Mcols(length(Mbreaks)),
                    xlab="Lon", ylab="Lat",
                    # cex.lab=1.7,font.axis=2,font.lab=2,
