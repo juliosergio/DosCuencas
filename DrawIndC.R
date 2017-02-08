@@ -33,67 +33,71 @@ ry <- range(yy)
     
 # Número de intervalos en los histogramas
 nn <- nrow(EIndC) - 2
-i <- as.integer(mustGet("Índice de intervalo a graficar" %+% " [1.." %+% nn %+% "]:>", inclSet = 1:nn))+2
-
-datos <- EIndC[i,] # Sigue con la estructura de data.frame
-
-# Características de la cuadricula:
-lasx <- seq(rx[1],rx[2],by=dx)
-lasy <- seq(ry[1],ry[2],by=dy)
-
-m <- length(lasx)
-n <- length(lasy)
-
-# En la matriz los renglones serán X y las columnas Y
-
-dd <- as.numeric(rep(NA,m*n))
-
-# Ahora llenamos los puntos de la matriz con la información relacionada
-# y contenida en datos
-
-# Matriz de índices
-Mii <- 1+(EIndC[1:2,]-c(rx[1],ry[1]))/c(dx,dy)
-
-# Apareamiento
-dd[as.integer(Mii["Lon",]+(Mii["Lat",]-1)*m)] <- as.numeric(datos)
-
-# se convierte a matriz
-dd <- matrix(dd, nrow = m)
-
-Mbreaks <- pretty(range(datos),10)
-
-t0 <- "Relación cambio SPI para intervalo " %+% rownames(datos)
-# puntos de la cuenca:
-
-pp <- read.csv(cuenca)
-
+inds <- evalstr(mustGet("Índice de intervalo a graficar" %+% " [1.." %+% nn %+% "]:>", inclSet = "[[:digit:]]*:?[[:digit:]]+"))+2
 
 resp <- mustGet("Elija tipo gráfico: 1) Contornos, 2) Colores =>","1", c("1", "2"))
-if (resp == "1") 
-{
-    # opar <- par(pty = "s")
-    plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry,
-         xlab = "Lon", ylab = "Lat")
-    u <- par("usr")
-    rect(u[1], u[3], u[2], u[4], border = "black")
-    contour(lasx, lasy, dd,lty = "solid", add = TRUE,levels=Mbreaks,
-            vfont = c("sans serif", "plain"))
-    grid()
-    polygon(pp$Lon, pp$Lat)
-    title(t0, font = 4)
-    # abline(h = 200*0:4, v = 200*0:4,lty = 2, lwd = 0.1)
-    # par(opar)
-} else {
-    # dev.off()
-    # Mbreaks <- seq(100, 200, by=10) # Son 10 intervalos
-    Mcols <- colorRampPalette(c("darkred","red","yellow","cornsilk2","green","blue","darkblue"),space="rgb")
-    filled.contour(lasx,lasy,dd,col=Mcols(length(Mbreaks)),
-                   xlab="Lon", ylab="Lat",
-                   # cex.lab=1.7,font.axis=2,font.lab=2,
-                   levels=Mbreaks,key.title="m", 
-                   main = t0,
-                   plot.axes = {axis(1); axis(2); grid();polygon(pp$Lon, pp$Lat)})
-    # title(t0,cex.main=2)
-}
 
+for (i in inds) {
+    datos <- EIndC[i,] # Sigue con la estructura de data.frame
+    
+    # Características de la cuadricula:
+    lasx <- seq(rx[1],rx[2],by=dx)
+    lasy <- seq(ry[1],ry[2],by=dy)
+    
+    m <- length(lasx)
+    n <- length(lasy)
+    
+    # En la matriz los renglones serán X y las columnas Y
+    
+    dd <- as.numeric(rep(NA,m*n))
+    
+    # Ahora llenamos los puntos de la matriz con la información relacionada
+    # y contenida en datos
+    
+    # Matriz de índices
+    Mii <- 1+(EIndC[1:2,]-c(rx[1],ry[1]))/c(dx,dy)
+    
+    # Apareamiento
+    dd[as.integer(Mii["Lon",]+(Mii["Lat",]-1)*m)] <- as.numeric(datos)
+    
+    # se convierte a matriz
+    dd <- matrix(dd, nrow = m)
+    
+    Mbreaks <- pretty(range(datos),10)
+    
+    t0 <- "Relación cambio SPI para intervalo " %+% rownames(datos)
+    # puntos de la cuenca:
+    
+    pp <- read.csv(cuenca)
+    
+    png(filename = cuenca %+% "_REL_" %+% (i-2) %+% ".png")
+    
+    if (resp == "1") 
+    {
+        # opar <- par(pty = "s")
+        plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry,
+             xlab = "Lon", ylab = "Lat")
+        u <- par("usr")
+        rect(u[1], u[3], u[2], u[4], border = "black")
+        contour(lasx, lasy, dd,lty = "solid", add = TRUE,levels=Mbreaks,
+                vfont = c("sans serif", "plain"))
+        grid()
+        polygon(pp$Lon, pp$Lat)
+        title(t0, font = 4)
+        # abline(h = 200*0:4, v = 200*0:4,lty = 2, lwd = 0.1)
+        # par(opar)
+    } else {
+        # dev.off()
+        # Mbreaks <- seq(100, 200, by=10) # Son 10 intervalos
+        Mcols <- colorRampPalette(c("darkred","red","yellow","cornsilk2","green","blue","darkblue"),space="rgb")
+        filled.contour(lasx,lasy,dd,col=Mcols(length(Mbreaks)),
+                       xlab="Lon", ylab="Lat",
+                       # cex.lab=1.7,font.axis=2,font.lab=2,
+                       levels=Mbreaks,key.title="m", 
+                       main = t0,
+                       plot.axes = {axis(1); axis(2); grid();polygon(pp$Lon, pp$Lat)})
+        # title(t0,cex.main=2)
+    }
+    dev.off()
+}
 

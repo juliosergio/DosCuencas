@@ -75,12 +75,12 @@ require(Hmisc)
 library(plotrix)
 
 # Set your working directory
-getwd()
-workdir <- paste("f:/r/spi/",sep="")
-setwd(workdir)
+# getwd()
+# workdir <- paste("f:/r/spi/",sep="")
+# setwd(workdir)
 
 ncname <- "CLICOM_pre_1960-2008_mm"  
-ncfname <- paste("f:/r/Datos/CLICOMg/",ncname,".nc", sep="")
+ncfname <- paste("../CLICOMg/",ncname,".nc", sep="")
 #outname <- "ccg_usumacinta_allmes.csv"
 dname <- "pre"  # note: tmp means temperature (not temporary)
 
@@ -99,7 +99,7 @@ head(lats)
 t <- ncvar_get(ncin,"time")
 
 tunits <- ncatt_get(ncin,"time","units")
-nt <- dim(t)-12   # Para quitar el 2008 y sean dos períodos de 24 años.
+nt <- dim(t)-12   # Para quitar el 2008 y sean dos per?odos de 24 a?os.
 nt
 
 tunits
@@ -174,7 +174,7 @@ for (nlt in lat2:lat1) {
     #spi <- sapply(1:12, function(i) getSPIfromPrec(getPrecOnTimescale(prec.detrend,i)))
     #instead
     
-    # En el último límite de spi.breaks ajustarlo para que sea consistente y no haya errores en histogramas
+    # En el ?ltimo l?mite de spi.breaks ajustarlo para que sea consistente y no haya errores en histogramas
     spi.breaks <- c(-2.5,-2,-1.5,-1.0,1.0,1.5,2,2.5)
     spi.cols <- colorRampPalette(c("darkred","red","yellow","white","green","blue","darkblue"),space="rgb")
 #    filled.contour(dates,seq(1:12),spi,col=spi.cols(11),xlab="Periodo (1960-2007)",ylab="Escala de Tiempo (meses)",cex.lab=1.2,font.axis=1.5,font.lab=2,levels=spi.breaks,key.title="SPI")
