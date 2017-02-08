@@ -9,7 +9,8 @@ if (!exists("LEIDO.MiBiblioteca")) source("RR/MiBiblioteca.R", chdir = T)
 prefix <- mustGet("Nombre genérico de los archivos (csv)->") # Por ejemplo ConchosPRE_mm
 fnam <- paste0(prefix, "_indC.csv")
 # El nombre de la cuenca
-cuenca <- strsplit(prefix, "PRE_mm")[[1]] %+% "_puntos.csv"
+cuenca <- strsplit(prefix, "PRE_mm")[[1]]
+cuencaF <- cuenca %+% "_puntos.csv"
 
 # La tabla de datos:
 EIndC <- read.csv(fnam, row.names = 1)
@@ -34,6 +35,14 @@ ry <- range(yy)
 # Número de intervalos en los histogramas
 nn <- nrow(EIndC) - 2
 inds <- evalstr(mustGet("Índice de intervalo a graficar" %+% " [1.." %+% nn %+% "]:>", inclSet = "[[:digit:]]*:?[[:digit:]]+"))+2
+
+pp <- read.csv(cuencaF) # frontera de la cuenca
+
+# rangos de la cuenca
+pp_rx <- range(pp$Lon)
+pp_ry <- range(pp$Lat)
+
+Mbreaks <- seq(-1, 1, length.out = 11)
 
 resp <- mustGet("Elija tipo gráfico: 1) Contornos, 2) Colores =>","1", c("1", "2"))
 
@@ -63,19 +72,17 @@ for (i in inds) {
     # se convierte a matriz
     dd <- matrix(dd, nrow = m)
     
-    Mbreaks <- pretty(range(datos),10)
+    # YA-NO>>> Mbreaks <- pretty(range(datos),10)
     
     t0 <- "Relación cambio SPI para intervalo " %+% rownames(datos)
     # puntos de la cuenca:
-    
-    pp <- read.csv(cuenca)
     
     png(filename = cuenca %+% "_REL_" %+% (i-2) %+% ".png")
     
     if (resp == "1") 
     {
         # opar <- par(pty = "s")
-        plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry,
+        plot(x = 0, y = 0,type = "n", xlim = pp_rx, ylim = pp_ry,
              xlab = "Lon", ylab = "Lat")
         u <- par("usr")
         rect(u[1], u[3], u[2], u[4], border = "black")
@@ -92,6 +99,7 @@ for (i in inds) {
         Mcols <- colorRampPalette(c("darkred","red","yellow","cornsilk2","green","blue","darkblue"),space="rgb")
         filled.contour(lasx,lasy,dd,col=Mcols(length(Mbreaks)),
                        xlab="Lon", ylab="Lat",
+                       xlim = pp_rx, ylim = pp_ry,
                        # cex.lab=1.7,font.axis=2,font.lab=2,
                        levels=Mbreaks,key.title="m", 
                        main = t0,

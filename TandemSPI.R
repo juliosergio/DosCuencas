@@ -68,7 +68,7 @@ rownames(spiX) <- rownames(sdd)
 spi0 <- spiX[1:n2,]
 spi1 <- spiX[(n2+1):ne,]
 
-Mbrk <- c(-2.5,-2,-1.5,-1,1,1.5,2,2.5)
+Mbrk <- c(-3,-2,-1.5,-1,1,1.5,2,3)
 hh0 <- sapply(spi0, hist, breaks=Mbrk, plot=F)
 hh1 <- sapply(spi1, hist, breaks=Mbrk, plot=F)
 
