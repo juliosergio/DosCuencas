@@ -6,12 +6,16 @@
 if (!exists("LEIDO.MiBiblioteca")) source("RR/MiBiblioteca.R", chdir = T)
 
 
-getPrecOnTimescale <- function(precipitation,k){
+getPrecOnTimescale <- function(precipitation, k, ini=1){
     # precipitation is a vector of monthly precipitation values
     # returns monthly precipation averaged over current month and prior k-1 months
+    # JSS: Se incluye 'ini' para series que tienen datos antes del inicio; esto es ini, indica el 
+    #      inicio de la serie que se desea analizar, p.ej., si ini=4, eso indica que los datos con
+    #      índices entre 1 y 3 sólo servirán para calcular los promedios que comienzan a partir del
+    #      índice 4
     Nt <- length(precipitation)
     # prec.k <- as.vector(sapply(seq(from=1, to=Nt),function(t) {tm <- max(t-k+1,1); mean(as.vector(precipitation[tm:t]))}))
-    prec.k <- sapply(1:Nt, function(t) {tm <- max(t-k+1,1); mean(precipitation[tm:t])})
+    prec.k <- sapply(ini:Nt, function(t) {tm <- max(t-k+1,1); mean(precipitation[tm:t])})
     return(prec.k)
 }
 
@@ -68,7 +72,7 @@ getSPIfromPrec <- function(precipitation){
 # composición de las dos funciones anteriores:
 
 getSPIfor_k <- getSPIfromPrec %cmp% getPrecOnTimescale  # Esto es: getSPIfor_k(prec, k), k=núm de meses
-
+                                                        # o bien getSPIfor_k(prec, k, ini), ini=inicio de la serie
 
 test <- function() {
     #generate some sample recipitation values using a weibull distribution

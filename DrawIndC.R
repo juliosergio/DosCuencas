@@ -34,6 +34,8 @@ ry <- range(yy)
     
 # Número de intervalos en los histogramas
 nn <- nrow(EIndC) - 2
+
+# En la siguiente captura se puede dar un sólo entero, o un conjunto de ellos, p. ej., 1, 1:7, o c(1,3,5)
 inds <- evalstr(mustGet("Índice de intervalo a graficar" %+% " [1.." %+% nn %+% "]:>", inclSet = "[[:digit:]]*:?[[:digit:]]+"))+2
 
 pp <- read.csv(cuencaF) # frontera de la cuenca
@@ -77,7 +79,11 @@ for (i in inds) {
     t0 <- "Relación cambio SPI para intervalo " %+% rownames(datos)
     # puntos de la cuenca:
     
-    png(filename = cuenca %+% "_REL_" %+% (i-2) %+% ".png")
+    fnam <- cuenca %+% "_REL_" %+% (i-2) %+% ".png"
+    
+    if (file.exists(fnam)) file.remove(fnam)
+    
+    png(filename = fnam)
     
     if (resp == "1") 
     {
@@ -96,7 +102,8 @@ for (i in inds) {
     } else {
         # dev.off()
         # Mbreaks <- seq(100, 200, by=10) # Son 10 intervalos
-        Mcols <- colorRampPalette(c("darkred","red","yellow","cornsilk2","green","blue","darkblue"),space="rgb")
+        # Mcols <- colorRampPalette(c("darkred","red","yellow","cornsilk2","green","blue","darkblue"),space="rgb")
+        Mcols <- colorRampPalette(c("darkred","red","sandybrown","cornsilk2","lightblue","royalblue3","darkblue"),space="rgb")
         filled.contour(lasx,lasy,dd,col=Mcols(length(Mbreaks)),
                        xlab="Lon", ylab="Lat",
                        xlim = pp_rx, ylim = pp_ry,
