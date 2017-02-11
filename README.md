@@ -47,7 +47,7 @@ se registran, en orden, cada uno de los valores de la variable hasta finalizar l
 
 El archivo en formato netCDF, contiene la variable en cuestión como un *hiper*cubo, a lo largo de tres dimensiones, en
 este caso, la longitud, la latitud, y el tiempo. Así, la primer tarea de este programa es *desdoblar* esa información como una
-tabla con n *columnas*, la longitud, la latitud, y cada uno de los valores de variable a lo largo del tiempo, esto para 
+tabla con n *columnas*, la longitud, la latitud, y cada uno de los valores de variable a lo largo del tiempo, esto es, para 
 cada uno de los puntos de la malla, en el renglón se anotan la longitud, la latitud y toda la serie de tiempo de la variable
 para ese punto. La segunda tarea es conservar de los puntos solamente los que se encuentran dentro del
 área especificada como límite. El resultado de estas operaciones se entrega como se ha descrito en la salida 
