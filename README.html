@@ -140,15 +140,25 @@ proyecto.</p>
 <p>En esta figura se muestran los programas con sus respectivas entradas y salidas principales. En seguida se procede a explicar cada uno de los programas.</p>
 <div id="stationsview.r" class="section level2">
 <h2>StationsView.R</h2>
+<div id="entradas" class="section level3">
+<h3>Entradas</h3>
 <p>Este programa tiene como entrada dos archivos con información, a saber:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>&lt;fuente-CLICOM-malla&gt;.nc</strong>. Es un archivo en formato netCDF que contiene la descripción malla de alguna de las variables climáticas: precipitación, temaperatura máxima, o temperatura mínima, en el territorio nacional. En este caso se trata del desarrollo que hiciera el CICESE con datos de la base de datos CLICOM, administrada por el Servicio Meteorológico Nacional.</p></li>
 <li><p><strong>&lt;Frontera-Cuenca&gt;.csv</strong>. Descripción de la frontera de la cuenca (o alguna región especifica), en formato CSV. La tabla debe contener por lo menos dos columnas: una etiquetada con el texto “Lon”, y la otra, con el texto “Lat”, que corresponden a las coordenadas geográficas, Longitud y Latitud, respectivamente.</p></li>
 </ol>
+</div>
+<div id="salidas" class="section level3">
+<h3>Salidas</h3>
 <p>El programa entrega como salida un único archivo:</p>
 <ul>
 <li><strong>&lt;Var-Cuenca-Pts-Ts&gt;.csv</strong>. Es un archivo, cuyas columnas son las series de tiempo de cada uno de los puntos (de malla), contenidos en la región descrita por la frontera de la cuenca (o área) provista, el primero y segundo renglón de cada una de la columnas contiene las coordenadas geográficas del punto correspondiente a la columna y a partir del tercer renglón se registran, en orden, cada uno de los valores de la variable hasta finalizar las series de tiempo.</li>
 </ul>
+</div>
+<div id="funcionamiento" class="section level3">
+<h3>Funcionamiento</h3>
+<p>El archivo en formato netCDF, contiene la variable en cuestión como un <em>hiper</em>cubo, a lo largo de tres dimensiones, en este caso, la longitud, la latitud, y el tiempo. Así, la primer tarea de este programa es <em>desdoblar</em> esa información como una tabla con n <em>columnas</em>, la longitud, la latitud, y cada uno de los valores de variable a lo largo del tiempo, esto para cada uno de los puntos de la malla, en el renglón se anotan la longitud, la latitud y toda la serie de tiempo de la variable para ese punto. La segunda tarea es conservar de los puntos solamente los que se encuentran dentro del área especificada como límite. El resultado de estas operaciones se entrega como se ha descrito en la salida &lt;Var-Cuenca-Pts-Ts&gt;.csv.</p>
+</div>
 </div>
 </div>
 
