@@ -87,16 +87,30 @@ datos para la construcción del correspondiente histograma.
 
 ### 2.4 Funcionamiento
 
-Al inicio el programa pregunta interactivamente por el archivo que contiene los datos, esta información sirve no sólo para 
-abrir el archivo en cuestión, sino para construír los nombres de los archivos de salida. Típicamente, el archivo de entrada 
-es alguno de los que se han producido como salida en la etapa descrita en la sección 1.3. El archivo contiene, como columnas, 
-series mensuales de precipitación para un conjunto de puntos, cuyas coordenadas geográficas también se reportan como las dos 
-primeras entradas de cada columna. Las series de tiempo son las mismas para todos los puntos considerados, así que de aquí 
+Al inicio, el programa pregunta interactivamente por el archivo que contiene los datos, esta información sirve no sólo para 
+abrir el archivo en cuestión, sino para construír los nombres de los archivos de salida. Posteriormente, el programa pregunta 
+también por el período en meses, en que se promedian los valores de precipitación previos cada mes. Típicamente, el archivo de 
+entrada es alguno de los que se han producido como salida en la etapa descrita en la sección 1.3. El archivo contiene, 
+como columnas, series mensuales de precipitación para un conjunto de puntos, cuyas coordenadas geográficas también se reportan como las dos primeras entradas de cada columna. Las series de tiempo son las mismas para todos los puntos considerados, así que de aquí 
 en adelante se denominará únicamente como _la serie de tiempo_.   
 
 La serie de tiempo, entonces, se particiona en dos subseries de tal manera que cada una de ellas consista en un número exacto e 
 igual de años completos. Los meses sobrantes, que se considerarán al principio de la serie original, podrán ser utilizados de 
 todas maneras para el cálculo de los promedios previos requeridos en la determinación de los SPIs.
+
+Para el cálculo de los SPIs, se consideran las dos subseries consecutivas, como si fuera una sola serie y se calculan por medio 
+de funciones modificadas para su cálculo a partir del código desarrollado por Joseph Wheatley (Biospherica, March 2010: 
+http://joewheatley.net/2010/03/). El resultado es una tabla con las series de tiempo mensuales para cada uno de los puntos 
+considerados. Esta tabla se particiona por la mitad, de acuerdo con las subseries de tiempo definidas previamente.
+
+Finalmente, se hace una estadistica a las subseries de tiempo, para producir histogramas de densidad de probabilidades para 
+los intervalos definidos por la _World Meteorological Organization_, para este índice, cuyas fronteras son: -3, -2, -1.5, 
+-1, 1, 1.5, 2, 3.
+
+Los archivos de salida contienen, para cada punto, la subserie de tiempo con los valores de los SPIs obtenidos, y al final, 
+los valores para reproducir el histograma de densidad de probabilidades en cada caso.
+
+
 
 
 
