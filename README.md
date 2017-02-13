@@ -79,10 +79,10 @@ algún período de varios años.
 
 El programa tiene como salida dos archivos, a saber:
 
-1. **\<Prefix\>_SPI0.csv**. Este archivo contine la primera mitad de la serie de tiempo de los SPIs calculados, así como los 
+1. **\<Prefix\>\_SPI0.csv**. Este archivo contine la primera mitad de la serie de tiempo de los SPIs calculados, así como los 
 datos para la construcción del correspondiente histograma.
 
-2. **\<Prefix\>_SPI1.csv**. Este archivo contine la segunda mitad de la serie de tiempo de los SPIs calculados, así como los 
+2. **\<Prefix\>\_SPI1.csv**. Este archivo contine la segunda mitad de la serie de tiempo de los SPIs calculados, así como los 
 datos para la construcción del correspondiente histograma.
 
 ### 2.4 Funcionamiento
@@ -94,7 +94,7 @@ series mensuales de precipitación para un conjunto de puntos, cuyas coordenadas
 primeras entradas de cada columna. Las series de tiempo son las mismas para todos los puntos considerados, así que de aquí 
 en adelante se denominará únicamente como _la serie de tiempo_.   
 
-La serie de tiempo, entonces, se pariciona en dos subseries de tal manera que cada una de ellas consista en un número exacto e 
+La serie de tiempo, entonces, se particiona en dos subseries de tal manera que cada una de ellas consista en un número exacto e 
 igual de años completos. Los meses sobrantes, que se consideraran al principio de la serie original, podrán ser utilizados de 
 todas maneras para el cálculo de los promedios previos requeridos en la determinación de los SPIs.
 
