@@ -95,7 +95,7 @@ primeras entradas de cada columna. Las series de tiempo son las mismas para todo
 en adelante se denominará únicamente como _la serie de tiempo_.   
 
 La serie de tiempo, entonces, se particiona en dos subseries de tal manera que cada una de ellas consista en un número exacto e 
-igual de años completos. Los meses sobrantes, que se consideraran al principio de la serie original, podrán ser utilizados de 
+igual de años completos. Los meses sobrantes, que se considerarán al principio de la serie original, podrán ser utilizados de 
 todas maneras para el cálculo de los promedios previos requeridos en la determinación de los SPIs.
 
 
