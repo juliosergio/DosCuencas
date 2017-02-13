@@ -20,9 +20,14 @@ región dada.
 En esta figura se muestran los programas con sus respectivas entradas y salidas principales. En seguida 
 se procede a explicar cada uno de los programas.
 
-## StationsView.R
+## 1 StationsView.R
 
-### Entradas
+### 1.1 Objetivo
+
+Este programa tiene como objetivo digerir cualquiera de archivos NetCDF que contienen la información de la malla de CLICOM
+producida para obtener recortes de la información en un formato más legible, CSV en este caso.
+
+### 1.2 Entradas
 
 Este programa tiene como entrada dos archivos con información, a saber:
 
@@ -34,7 +39,7 @@ desarrollo que hiciera el CICESE con datos de la base de datos CLICOM, administr
 debe contener por lo menos dos columnas: una etiquetada con el texto "Lon", y la otra, con el texto "Lat", que corresponden 
 a las coordenadas geográficas, Longitud y Latitud, respectivamente.
 
-### Salidas
+### 1.3 Salidas
 
 El programa entrega como salida un único archivo:
 
@@ -43,15 +48,62 @@ contenidos en la región descrita por la frontera de la cuenca (o área) provist
 de la columnas contiene las coordenadas geográficas del punto correspondiente a la columna y a partir del tercer renglón 
 se registran, en orden, cada uno de los valores de la variable hasta finalizar las series de tiempo.
 
-### Funcionamiento
+### 1.4 Funcionamiento
 
-El archivo en formato netCDF, contiene la variable en cuestión como un *hiper*cubo, a lo largo de tres dimensiones, en
+Al inicio del programa pregunta interactivamente por el nombre del archivo netCDF que se desea procesar. 
+Dicho archivo, contiene la variable en cuestión como un *hiper*cubo, a lo largo de tres dimensiones, en
 este caso, la longitud, la latitud, y el tiempo. Así, la primer tarea de este programa es *desdoblar* esa información como una
 tabla con n *columnas*, la longitud, la latitud, y cada uno de los valores de variable a lo largo del tiempo, esto es, para 
 cada uno de los puntos de la malla, en el renglón se anotan la longitud, la latitud y toda la serie de tiempo de la variable
 para ese punto. La segunda tarea es conservar de los puntos solamente los que se encuentran dentro del
-área especificada como límite. El resultado de estas operaciones se entrega como se ha descrito en la salida 
-\<Var-Cuenca-Pts-Ts\>.csv.
+área especificada como límite. El resultado de estas operaciones, que consiste en la transposición de la tabla descrita 
+antes, se entrega como se ha mencionado en la salida \<Var-Cuenca-Pts-Ts\>.csv.
+
+## 2 TandemSPI.R
+
+### 2.1 Objetivo
+
+A partir de una tabla de series de tiempo de precipitaciones mensuales, para un conjunto de puntos y que se apega al formato 
+CSV descrito como la salida \<Var-Cuenca-Pts-Ts\>.csv, en la sección 1.3, produce, para una partición de la serie de tiempo 
+original en dos series, dos tablas que contienen series de tiempo de los SPIs calculados para cada punto, así como los datos para la producción de histogramas de densidad de probabilidades para cada una de las series de tiempo de SPIs.
+
+### 2.2 Entradas
+
+El programa tiene como entrada un único archivo:
+
+* **\<Var-Cuenca-Pts-Ts\>.csv**. Este archivo se apega al formato descrito en la sección 1.3; sin embargo, no se trata de 
+cualquiera de los archivos que salen de esa estapa, sino espicíficamente de archivos de precipitación con datos mensuales durante 
+algún período de varios años.
+
+### 2.3 Salidas
+
+El programa tiene como salida dos archivos, a saber:
+
+1. **\<Prefix\>_SPI0.csv**. Este archivo contine la primera mitad de la serie de tiempo de los SPIs calculados, así como los 
+datos para la construcción del correspondiente histograma.
+
+2. **\<Prefix\>_SPI1.csv**. Este archivo contine la segunda mitad de la serie de tiempo de los SPIs calculados, así como los 
+datos para la construcción del correspondiente histograma.
+
+### 2.4 Funcionamiento
+
+Al inicio el programa pregunta interactivamente por el archivo que contiene los datos, esta información sirve no sólo para 
+abrir el archivo en cuestión, sino para construír los nombres de los archivos de salida. Típicamente, el archivo de entrada 
+es alguno de los que se han producido como salida en la etapa descrita en la sección 1.3. El archivo contiene, como columnas, 
+series mensuales de precipitación para un conjunto de puntos, cuyas coordenadas geográficas también se reportan como las dos 
+primeras entradas de cada columna. Las series de tiempo son las mismas para todos los puntos considerados, así que de aquí 
+en adelante se denominará únicamente como _la serie de tiempo_.   
+
+La serie de tiempo, entonces, se pariciona en dos subseries de tal manera que cada una de ellas consista en un número exacto e 
+igual de años completos. Los meses sobrantes, que se consideraran al principio de la serie original, podrán ser utilizados de 
+todas maneras para el cálculo de los promedios previos requeridos en la determinación de los SPIs.
+
+
+
+
+
+
+
 
 
 
