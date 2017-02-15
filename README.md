@@ -146,7 +146,7 @@ el gráfico tipo espejo, con los histogramas en disposición vertical en vez de 
 y donde en vez de representar el ancho de las barras a escala, simplemente se señalan los intervalos mediante el texto
 "(Inf,Sup]" que forma parte de las etiquetas centrales del gráfico.
 
-$r=\frac { { h }_{ 1 }-{ h }_{ 0 } }{ { h }_{ 1 }+{ h }_{ 0 } }$
+![Formula 1](daum_equation_1487185111127.png)
 
 **Figura 2.** Histogramas comparativos de dos períodos
 
