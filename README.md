@@ -139,7 +139,8 @@ entre las densidades de un período y el otro. La definición del índice se mue
 
 ### 3.4 Funcionamiento
 
-Los dos archivos de entrada contienen subseries de tiempo de los SPIs para cada punto, y, al final de cada subserie, un análsis 
+Inicialmente el programa pregunta por el prefijo (Prefix) de los dos archivos que se van a considerar. 
+Estos dos archivos de entrada, contienen subseries de tiempo de los SPIs para cada punto, y, al final de cada subserie, un análsis 
 estadístico consistente en los datos para la construcción de histogramas de densidad de probabilidades, para los dos períodos 
 y los intervalos definidos en la sección 2.4. Gráficamente, para un sólo punto, los dos histogramas se pudieran representar en 
 el gráfico tipo espejo, con los histogramas en disposición vertical en vez de horizontal, que se muestra en la Fig. 2, 
@@ -160,7 +161,7 @@ representa la altura de la barra del histograma del segundo período. En la Fig.
 cada intervalo de los histogramas, se muestra también en las etiquetas centrales de la figura.
 
 Puesto que el programa cuenta con los dos histogramas para cada uno de los puntos dentro de la región considerada, el cálculo 
-de los índices $r$, para todos los intervalos de cada par de histogramas, se efectúa para todos los puntos y se obtiene una 
+de los índices _r_, para todos los intervalos de cada par de histogramas, se efectúa para todos los puntos y se obtiene una 
 tabla con los índices, que se guarda en el archivo de salida \<Prefix\>\_indC.csv, descrito antes el la sección 3.3.
 
 De acuerdo con la construcción del índice, _r_, sus valores estarán acotados entre -1 y 1, de tal manera que si el índice es 
