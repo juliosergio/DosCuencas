@@ -36,7 +36,7 @@ ry <- range(yy)
 nn <- nrow(EIndC) - 2
 
 # En la siguiente captura se puede dar un sólo entero, o un conjunto de ellos, p. ej., 1, 1:7, o c(1,3,5)
-inds <- evalstr(mustGet("Índice de intervalo a graficar" %+% " [1.." %+% nn %+% "]:>", inclSet = "[[:digit:]]*:?[[:digit:]]+"))+2
+inds <- evalstr(mustGet("Índices de intervalos a graficar" %+% " [1.." %+% nn %+% "]:>", inclSet = "[[:digit:]]*:?[[:digit:]]+"))+2
 
 pp <- read.csv(cuencaF) # frontera de la cuenca
 
