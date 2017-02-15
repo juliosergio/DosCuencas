@@ -110,6 +110,47 @@ los intervalos definidos por la _World Meteorological Organization_, para este �
 Los archivos de salida contienen, para cada punto, la subserie de tiempo con los valores de los SPIs obtenidos, y al final, 
 los valores para reproducir el histograma de densidad de probabilidades en cada caso.
 
+## 3 RelateSPIs.R
+
+### 3.1 Objetivo
+
+Este programa toma dos conjuntos de subseries de tiempo _paralelas_ en cuanto a un conjunto de puntos considerados en alguna region
+dada, de SPIs para dos períodos consecutivos, y los histogramas asociados con cada una de las subseries, con el propósito de compararlos mediante un índice que relaciona los valores en los histogramas.
+
+### 3.2 Entradas
+
+El programa tiene como entrada dos archivos, a saber:
+
+1. **\<Prefix\>\_SPI0.csv**. Este archivo contine la primera mitad de la serie de tiempo de los SPIs calculados, así como los 
+datos para la construcción del correspondiente histograma.
+
+2. **\<Prefix\>\_SPI1.csv**. Este archivo contine la segunda mitad de la serie de tiempo de los SPIs calculados, así como los 
+datos para la construcción del correspondiente histograma.
+
+
+### 3.3 Salidas
+
+El programa tiene como salida un único archivo:
+
+* **\<Prefix\>\_indC.csv**. Contiene la tabla de índides comparativos entre los dos períodos de tiempo considerados. Para cada 
+punto, cuyas coordenadas también se reportan, la tabla contiene los índices compartativos para cada intervalo de histograma, 
+entre las densidades de un período y el otro. La definición del índice se muestra abajo, en la sección 3.4.
+
+
+### 3.4 Funcionamiento
+
+Los dos archivos de entrada contienen subseries de tiempo de los SPIs para cada punto, y, al final de cada subserie, un análsis 
+estadístico consistente en los datos para la construcción de histogramas de densidad de probabilidades, para los dos períodos 
+y los intervalos definidos en la sección 2.4. Gráficamente, para un sólo punto, los dos histogramas se pudieran representar en 
+el gráfico tipo espejo, con los histogramas en disposición vertical en vez de horizontal, que se muestra en la Fig. 2, 
+y donde en vez de representar el ancho de las barras a escala, simplemente se señalan los intervalos mediante el texto
+"(Inf,Sup]" que forma parte de las etiquetas centrales del gráfico.
+
+$r=\frac { { h }_{ 1 }-{ h }_{ 0 } }{ { h }_{ 1 }+{ h }_{ 0 } }$
+
+**Figura 2.** Histogramas comparativos de dos períodos
+
+![Histogramas comparativos](ConchosPRE_mm_Pyramid.png)
 
 
 
