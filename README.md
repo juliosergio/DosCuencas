@@ -146,11 +146,25 @@ el gráfico tipo espejo, con los histogramas en disposición vertical en vez de 
 y donde en vez de representar el ancho de las barras a escala, simplemente se señalan los intervalos mediante el texto
 "(Inf,Sup]" que forma parte de las etiquetas centrales del gráfico.
 
-![Formula 1](daum_equation_1487185111127.png)
-
 **Figura 2.** Histogramas comparativos de dos períodos
 
 ![Histogramas comparativos](ConchosPRE_mm_Pyramid.png)
+
+Dada la construcción de los SPIs como elementos de una distribución normal estandarizada, y ya que los dos histogramas 
+mencionados antes provienen de esa distribución, para cada intervalo, la suma de las alturas de las barras de los períodos a lo largo de todos los puntos considerados, es la misma. Por ejemplo, si se considera el intervalo central, en la Fig. 2, la suma de las _alturas_ de las barras en este caso es 0.368 + 0.299 = 0.667, es la misma para para todos los puntos considerados. Con esto
+en mente, para cada intervalo de los histogramas, definimos el siguiente índice:
+
+<center> ![Formula 1](daum_equation_1487185111127.png) </center>
+
+donde, $h_0$, representa la altura de la barra del histograma del primer período y $h_1$, representa la altura de la barra del 
+histograma del segundo período. En la Fig. 2, el valor del índice $r$ para cada intervalo de los histogramas, se muestra 
+también en las etiquetas centrales de la figura.
+
+Puesto que el programa cuenta con los dos histogramas para cada uno de los puntos dentro de la región considerada, el cálculo 
+de los índices $r$, para todos los intervalos de cada par de histogramas, se efectúa para todos los puntos y se obtiene una 
+tabla con los índices, que se guarda en el archivo de salida \<Prefix\>\_indC.csv, descrito antes el la sección 3.3.
+
+
 
 
 
