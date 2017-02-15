@@ -164,6 +164,12 @@ Puesto que el programa cuenta con los dos histogramas para cada uno de los punto
 de los índices $r$, para todos los intervalos de cada par de histogramas, se efectúa para todos los puntos y se obtiene una 
 tabla con los índices, que se guarda en el archivo de salida \<Prefix\>\_indC.csv, descrito antes el la sección 3.3.
 
+De acuerdo con la construcción del índice, _r_, sus valores estarán acotados entre -1 y 1, de tal manera que si el índice es 
+negativo, se estaría indicando una preponderancia del primer período sobre el segundo, mientras que si es positivo, se estaría 
+señalando una preponderancia del segundo período sobre el primero; finalmente, si el índice es 0, se estaría mostrando que el
+comportamiento de los dos períodos es esencialmente el mismo.
+
+
 
 
 
