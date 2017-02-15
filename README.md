@@ -156,9 +156,9 @@ en mente, para cada intervalo de los histogramas, definimos el siguiente índice
 
 <center> ![Formula 1](daum_equation_1487185111127.png) </center>
 
-donde, _h_<sub>_0_</sub>, representa la altura de la barra del histograma del primer período y $h_1$, representa la altura de la barra del 
-histograma del segundo período. En la Fig. 2, el valor del índice $r$ para cada intervalo de los histogramas, se muestra 
-también en las etiquetas centrales de la figura.
+donde, _h_<sub>_0_</sub>, representa la altura de la barra del histograma del primer período y _h_<sub>_1_</sub>, 
+representa la altura de la barra del histograma del segundo período. En la Fig. 2, el valor del índice _r_ para 
+cada intervalo de los histogramas, se muestra también en las etiquetas centrales de la figura.
 
 Puesto que el programa cuenta con los dos histogramas para cada uno de los puntos dentro de la región considerada, el cálculo 
 de los índices $r$, para todos los intervalos de cada par de histogramas, se efectúa para todos los puntos y se obtiene una 
