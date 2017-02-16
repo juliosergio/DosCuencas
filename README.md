@@ -176,14 +176,46 @@ comportamiento de los dos períodos es esencialmente el mismo.
 ### 4.1 Objetivo
 
 Una vez que se han obtenido los índices comparativos, _r_, para todos los puntos del área considerada, esos valores para un 
-intervalo dado se pueden graficar mediante un código de colores en un mapa representativo de la región; ese es el objetivo 
+intervalo dado se pueden graficar, mediante un código de colores, en un mapa representativo de la región; ese es el objetivo 
 del presente programa.
 
 ### 4.2 Entradas
 
+El programa tiene como entrada un único archivo:
+
+* **\<Prefix\>\_indC.csv**. Contiene la tabla de índides comparativos entre los dos períodos de tiempo considerados. Para cada 
+punto, cuyas coordenadas también se reportan, la tabla contiene los índices compartativos para cada intervalo de histograma, 
+entre las densidades de un período y el otro. La definición del índice se ha indicado en la sección 3.4. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_indC.csv.
+
 ### 4.3 Salidas
 
+El programa tiene como salida un conjunto de archivos:
+
+* **\<Cuenca\>\_REL\_\<1..n\>.png**. De 1 a _n_ archivos gráficos, cada uno de los cuales contiene un mapa en el que se, 
+mediante un código de colores, se representan los valores del índice comparativo de SPIs para dos períodos, en la región dada.
+La escala de colores representa valores entre -1 y 1. Habrá tantos archivos de éstos como intervalos se hayan definido 
+para los histogramas de SPIs. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es Conchos_REL_3.csv.
+
 ### 4.4 Funcionamiento
+
+Al inicio, este programa pregunta por el prefijo (Prefix) que permite distinguir el archivo de entrada que contiene los 
+índices comparativos y, dado que el programa tiene la posibilidad de generar tantos mapas como intervalos de los histogramas se
+hayan definido, también pregunta por el conjunto de números (como código R) que determinan los intervalos cuyos mapas se 
+quieran generar. Por ejemplo, si se han definido siete intervalos para los histogramas y se quieren generar los siete mapas
+correspondientes, aquí se puede introducir el texto "1:7" que para R significa el conjunto de valores entre 1 y 7; si sólo se
+quisieran generar los mapas para los intervalos 2, 3 y 7, el texto que se podría introducir es "c(2,3,7)". Después de esto, 
+el programa preguntará por el tipo de gráfico que puede ser un mapa de colores o alternativamente un mapa con _curvas de nivel_ 
+en las que se representan mediante contornos las regiones correspondientes a los valores del índice dentro del mapa.
+
+Una vez capturadas las entradas el programa procede a generar los mapas solicitados y que son semejantes al que se muestra
+en la Fig. 3.
+
+**Figura 3.** Mapa de índices comparativos de dos períodos
+
+![Mapas comparativos](Conchos_REL_2.png)
+
+
+
 
 
 
