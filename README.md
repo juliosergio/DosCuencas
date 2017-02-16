@@ -46,7 +46,8 @@ El programa entrega como salida un único archivo:
 * **\<Var-Cuenca-Pts-Ts\>.csv**. Es un archivo, cuyas columnas son las series de tiempo de cada uno de los puntos (de malla), 
 contenidos en la región descrita por la frontera de la cuenca (o área) provista, el primero y segundo renglón de cada una 
 de la columnas contiene las coordenadas geográficas del punto correspondiente a la columna y a partir del tercer renglón 
-se registran, en orden, cada uno de los valores de la variable hasta finalizar las series de tiempo.
+se registran, en orden, cada uno de los valores de la variable hasta finalizar las series de tiempo. Un ejemplo de este tipo 
+de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm.csv.
 
 ### 1.4 Funcionamiento
 
@@ -73,17 +74,18 @@ El programa tiene como entrada un único archivo:
 
 * **\<Var-Cuenca-Pts-Ts\>.csv**. Este archivo se apega al formato descrito en la sección 1.3; sin embargo, no se trata de 
 cualquiera de los archivos que salen de esa estapa, sino espicíficamente de archivos de precipitación con datos mensuales durante 
-algún período de varios años.
+algún período de varios años. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es 
+ConchosPRE_mm.csv.
 
 ### 2.3 Salidas
 
 El programa tiene como salida dos archivos, a saber:
 
 1. **\<Prefix\>\_SPI0.csv**. Este archivo contine la primera mitad de la serie de tiempo de los SPIs calculados, así como los 
-datos para la construcción del correspondiente histograma.
+datos para la construcción del correspondiente histograma. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_SPI0.csv.
 
 2. **\<Prefix\>\_SPI1.csv**. Este archivo contine la segunda mitad de la serie de tiempo de los SPIs calculados, así como los 
-datos para la construcción del correspondiente histograma.
+datos para la construcción del correspondiente histograma. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_SPI1.csv.
 
 ### 2.4 Funcionamiento
 
@@ -122,10 +124,10 @@ dada, de SPIs para dos períodos consecutivos, y los histogramas asociados con c
 El programa tiene como entrada dos archivos, a saber:
 
 1. **\<Prefix\>\_SPI0.csv**. Este archivo contine la primera mitad de la serie de tiempo de los SPIs calculados, así como los 
-datos para la construcción del correspondiente histograma.
+datos para la construcción del correspondiente histograma.  Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_SPI0.csv.
 
 2. **\<Prefix\>\_SPI1.csv**. Este archivo contine la segunda mitad de la serie de tiempo de los SPIs calculados, así como los 
-datos para la construcción del correspondiente histograma.
+datos para la construcción del correspondiente histograma.  Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_SPI1.csv.
 
 
 ### 3.3 Salidas
@@ -134,7 +136,7 @@ El programa tiene como salida un único archivo:
 
 * **\<Prefix\>\_indC.csv**. Contiene la tabla de índides comparativos entre los dos períodos de tiempo considerados. Para cada 
 punto, cuyas coordenadas también se reportan, la tabla contiene los índices compartativos para cada intervalo de histograma, 
-entre las densidades de un período y el otro. La definición del índice se muestra abajo, en la sección 3.4.
+entre las densidades de un período y el otro. La definición del índice se muestra abajo, en la sección 3.4.  Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_indC.csv.
 
 
 ### 3.4 Funcionamiento
@@ -168,6 +170,22 @@ De acuerdo con la construcción del índice, _r_, sus valores estarán acotados 
 negativo, se estaría indicando una preponderancia del primer período sobre el segundo, mientras que si es positivo, se estaría 
 señalando una preponderancia del segundo período sobre el primero; finalmente, si el índice es 0, se estaría mostrando que el
 comportamiento de los dos períodos es esencialmente el mismo.
+
+## 4 DrawIndC.R
+
+### 4.1 Objetivo
+
+Una vez que se han obtenido los índices comparativos, _r_, para todos los puntos del área considerada, esos valores para un 
+intervalo dado se pueden graficar mediante un código de colores en un mapa representativo de la región; ese es el objetivo 
+del presente programa.
+
+### 4.2 Entradas
+
+### 4.3 Salidas
+
+### 4.4 Funcionamiento
+
+
 
 
 
