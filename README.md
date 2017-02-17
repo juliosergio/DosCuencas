@@ -207,12 +207,16 @@ quisieran generar los mapas para los intervalos 2, 3 y 7, el texto que se podrí
 el programa preguntará por el tipo de gráfico que puede ser un mapa de colores o alternativamente un mapa con _curvas de nivel_ 
 en las que se representan mediante contornos las regiones correspondientes a los valores del índice dentro del mapa.
 
-Una vez capturadas las entradas el programa procede a generar los mapas solicitados y que son semejantes al que se muestra
-en la Fig. 3.
+Una vez capturadas las entradas, el programa procede a generar los mapas solicitados, que pueden ser en cualquiera de las dos 
+modalidades: colores o contornos, como los que se muestran en la Fig. 3 y la Fig. 4, respectivamente.
 
-**Figura 3.** Mapa de índices comparativos de dos períodos
+**Figura 3.** Mapa de índices comparativos de dos períodos, con códigos de color
 
-![Mapas comparativos](Conchos_REL_2.png)
+![Mapas comparativos](Conchos_REL_2.png) 
+
+**Figura 4.** Mapa de índices comparativos de dos períodos, como contornos
+
+![Mapas comparativosA](Conchos_REL_2a.png)
 
 
 
