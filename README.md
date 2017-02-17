@@ -82,10 +82,13 @@ ConchosPRE_mm.csv.
 El programa tiene como salida dos archivos, a saber:
 
 1. **\<Prefix\>\_SPI0.csv**. Este archivo contine la primera mitad de la serie de tiempo de los SPIs calculados, así como los 
-datos para la construcción del correspondiente histograma. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_SPI0.csv.
+datos para la construcción del correspondiente histograma. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_12_SPI0.csv.
 
 2. **\<Prefix\>\_SPI1.csv**. Este archivo contine la segunda mitad de la serie de tiempo de los SPIs calculados, así como los 
-datos para la construcción del correspondiente histograma. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_SPI1.csv.
+datos para la construcción del correspondiente histograma. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_12_SPI1.csv.
+
+Cabe notar que en la composición del prefijo (Prefix) del nombre de los archivos de salida se incluye al final el período en 
+meses de los SPIs calculados.
 
 ### 2.4 Funcionamiento
 
@@ -191,10 +194,12 @@ entre las densidades de un período y el otro. La definición del índice se ha 
 
 El programa tiene como salida un conjunto de archivos:
 
-* **\<Cuenca\>\_REL\_\<1..n\>.png**. De 1 a _n_ archivos gráficos, cada uno de los cuales contiene un mapa en el que se, 
+* **\<Cuenca_per\>\_REL\_\<1..n\>.png**. De 1 a _n_ archivos gráficos, cada uno de los cuales contiene un mapa en el que se, 
 mediante un código de colores, se representan los valores del índice comparativo de SPIs para dos períodos, en la región dada.
 La escala de colores representa valores entre -1 y 1. Habrá tantos archivos de éstos como intervalos se hayan definido 
-para los histogramas de SPIs. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es Conchos_REL_3.csv.
+para los histogramas de SPIs. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es Conchos_12_REL_3.csv.
+
+Nótese que el nombre del archivo de salida incluye el período, en meses, para el cual se han calculado los SPIs.
 
 ### 4.4 Funcionamiento
 

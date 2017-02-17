@@ -6,10 +6,11 @@
 if (!exists("LEIDO.MiBiblioteca")) source("RR/MiBiblioteca.R", chdir = T)
 
 # Leemos el archivo que contiene los datos:
-prefix <- mustGet("Nombre genérico de los archivos (csv)->") # Por ejemplo ConchosPRE_mm
+prefix <- mustGet("Nombre genérico de los archivos (csv)->") # Por ejemplo ConchosPRE_mm_12
 fnam <- paste0(prefix, "_indC.csv")
 # El nombre de la cuenca
-cuenca <- strsplit(prefix, "PRE_mm")[[1]]
+components <- strsplit(prefix, "PRE_mm")[[1]]
+cuenca <- components[1]
 cuencaF <- cuenca %+% "_puntos.csv"
 
 # La tabla de datos:
@@ -79,7 +80,7 @@ for (i in inds) {
     t0 <- "Relación cambio SPI para intervalo " %+% rownames(datos)
     # puntos de la cuenca:
     
-    fnam <- cuenca %+% "_REL_" %+% (i-2) %+% ".png"
+    fnam <- cuenca %+% components[2] %+% "_REL_" %+% (i-2) %+% ".png"
     
     if (file.exists(fnam)) file.remove(fnam)
     

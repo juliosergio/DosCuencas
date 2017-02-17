@@ -7,7 +7,7 @@
 if (!exists("LEIDO.MiBiblioteca")) source("RR/MiBiblioteca.R", chdir = T)
 
 # Leemos el archivo que contiene los datos:
-prefix <- mustGet("Nombre genérico de los archivos (csv)->") # Por ejemplo ConchosPRE_mm
+prefix <- mustGet("Nombre genérico de los archivos (csv)->") # Por ejemplo ConchosPRE_mm_12
 fnams <- paste0(prefix, c("_SPI0.csv", "_SPI1.csv"))
 
 # La tablas de datos:

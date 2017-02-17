@@ -96,7 +96,7 @@ Scols <- Mcols(length(Mbrk))
 
 labs <- names(h0) %+% ", r= " %+% signif(indC,3)
 
-fnam <- prefix %+% "_Pyramid.png"
+fnam <- prefix %+% "_" %+% k %+% "_Pyramid.png"
 if (file.exists(fnam)) file.remove(fnam)
 
 png(filename = fnam, height = 480, width = 550)
