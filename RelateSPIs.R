@@ -28,7 +28,7 @@ indC <- (h1-h0)/(h1+h0)
 
 # Guardamos los resultados
 
-write.csv(rbind(E_spi0[1:2,], indC), file = prefix %+% "_indC.csv", row.names = T)
+write.csv(rbind(E_spi0[1:2,], indC), file = prefix %,% "_indC.csv", row.names = T)
 
 
 

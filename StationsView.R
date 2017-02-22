@@ -42,7 +42,7 @@ rm(vv,lonlat)
 
 fn <- mustGet("Nombre de archivo para guardar:")
 zz <- t(zz) # trasponemos
-colnames(zz) <- "P" %+% 1:ncol(zz)
+colnames(zz) <- "P" %,% 1:ncol(zz)
 write.csv(zz, file=fn)
 
 

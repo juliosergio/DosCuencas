@@ -12,17 +12,17 @@ composite <- function(f,g) function(...) f(g(...))
 # como operador:
 `%cmp%` <- composite # Operador de composición de funciones
 
-`%+%` <- function(x, y) paste0(x, y) # Operador de concatenación de cadenas
+`%,%` <- function(x, y) paste0(x, y) # Operador de concatenación de cadenas
 
 `%//%` <- function(x,y) as.integer(x/y) # División entera
 
 
 bdir <- "" # YA-NO>> "E:/RR/"
-source(bdir %+% "ManejaErrores.R")
+source(bdir %,% "ManejaErrores.R")
 
-source(bdir %+% "Sustituyes.R")
-source(bdir %+% "Geodetic.distance.R")
-source(bdir %+% "Intercala.R")
+source(bdir %,% "Sustituyes.R")
+source(bdir %,% "Geodetic.distance.R")
+source(bdir %,% "Intercala.R")
 
 mustGet <- function (prompt, default="", inclSet=NULL) {
     # Obtiene un dato en línea, posiblemente obligando a que
@@ -69,7 +69,7 @@ composite <- function(f,g) function(...) f(g(...))
 # como operador:
 `%cmp%` <- composite # Operador de composición de funciones
 
-`%+%` <- function(x, y) paste0(x, y) # Operador de concatenación de cadenas
+`%,%` <- function(x, y) paste0(x, y) # Operador de concatenación de cadenas
 
 # Comparación que incluye NAs
 compareNA <- function(v1,v2) {
@@ -158,7 +158,7 @@ numericConComaDec <- forceNum %cmp% cambia %cmp% bareId
 
 # Expresiones gramaticales
 E_SI <- "^[[:blank:]]*[Ss][IiÍí][[:blank:]]*$" # Sí
-E_SIoX <- E_SI %+% "|^[[:blank:]]*[Xx][[:blank:]]*$"
+E_SIoX <- E_SI %,% "|^[[:blank:]]*[Xx][[:blank:]]*$"
 E_OTRO <- " ?OTRO ?" # OTRO
 E_OBJ <- "[[:alpha:]]+[[:digit:]]*" # Objeto: letras + num
 E_DefOBJ <- paste0(E_OBJ, ":") # Definición de Objeto
@@ -178,9 +178,9 @@ E_1stToken <- "(^[[:alpha:]]?[^[:alpha:]]+)[[:alpha:]]"
 # E_comaYOblancos <- "[[:blank:]]+,?[[:blank:]]*|[[:blank:]]*,?[[:blank:]]+|,"
 E_comaYblancos <- "[[:blank:]]*,[[:blank:]]*"
 E_comaGYblancos <- "[[:blank:]]*[-,][[:blank:]]*" # Coma o guión con blancos
-E_comaYOblancos <- E_comaYblancos  %+% "|[[:blank:]]+" 
-E_comaYbl_O_Y <- E_comaYblancos %+% "|[[:blank:]]+[YyEe][[:blank:]]+"
-E_comaYbl_O_Yg <- E_comaYblancos %+% "|[[:blank:]]+[-YyEe][[:blank:]]+" # con guión
+E_comaYOblancos <- E_comaYblancos  %,% "|[[:blank:]]+" 
+E_comaYbl_O_Y <- E_comaYblancos %,% "|[[:blank:]]+[YyEe][[:blank:]]+"
+E_comaYbl_O_Yg <- E_comaYblancos %,% "|[[:blank:]]+[-YyEe][[:blank:]]+" # con guión
 # E_grds <- "[[:blank:]]*[°º'\\\"][[:blank:]]*|[[:blank:]]+"
 E_grds <- "[^.[:digit:]]+"
 
@@ -262,8 +262,8 @@ fform <- function (subTabla, expr, nvar="X", nfun="forceNum") {
     # Las expresiones expr serán del tipo:
     #  "X[[2]] * X[[1]] + X[[3]]" donde los X[[i]] son los elementos de subTabla
     e1 <- sys.frame(sys.nframe()) # El ambiente de la función
-    nexp <- nvar %+% "(.+?]])"
-    nval <- nfun %+% "(subTabla\\1)"
+    nexp <- nvar %,% "(.+?]])"
+    nval <- nfun %,% "(subTabla\\1)"
     # eval(parse(text=gsub(nexp, nval, expr)))
     evalstr(gsub(nexp, nval, expr), e1)
 }
@@ -309,7 +309,7 @@ embedCampos <- function(subTabla, sep="/", prefix="", postfix="") {
     # si hay NAs en un registro, se descarta:
     ii <- !(apply(subTabla, 1, function(v) any(is.na(v))))
     rr <- NULL
-    rr[ii] <- prefix %+% apply(subTabla[ii,], 1, paste0, collapse = sep) %+% postfix
+    rr[ii] <- prefix %,% apply(subTabla[ii,], 1, paste0, collapse = sep) %,% postfix
     rr
 }
 
@@ -320,7 +320,7 @@ TSubtabla <- function(subTabla) {
 
 
 mergeStr <- function(desc, dato) {
-    ifelse(is.na(dato) | dato=="", "", desc %+% "=(" %+% dato %+% ")")
+    ifelse(is.na(dato) | dato=="", "", desc %,% "=(" %,% dato %,% ")")
 }
 
 pegaNombrado <- function(subTabla, sep="; ") {
@@ -362,7 +362,7 @@ calcSegmentado <- function(SubTabla,
 }
 
 ini <- function(size, type, na.ini = F) {
-    if (na.ini) return(get("as." %+% type)(rep(NA, size)))
+    if (na.ini) return(get("as." %,% type)(rep(NA, size)))
     vector(mode = type, size)
 }
 
@@ -826,7 +826,7 @@ mapCatalogo <- function(subTabla, Catalogo, ord=NULL, strSet=NULL) {
 discierne00 <- function(v, key) {
     rr <- rep(as.numeric(NA), length(v))
     ii <- grepl(key, v)
-    rr[ii] <- as.numeric(sub(key %+% ".*", "", v[ii]))
+    rr[ii] <- as.numeric(sub(key %,% ".*", "", v[ii]))
     rr
 }
 
@@ -859,7 +859,7 @@ mjoin <- function(t0, t1) {
     names(tipos.t0) <- names(t0)
     ii <- !is.na(tipos.t0)
     for (jj in names(t0)[ii]) {
-        t0[[jj]] <- get("as." %+% tipos.t0[jj])(t0[[jj]])
+        t0[[jj]] <- get("as." %,% tipos.t0[jj])(t0[[jj]])
     }
     full_join(t0, t1)
 }
@@ -879,15 +879,15 @@ estandariza <- function(path) {
     ss0 <- ss[-length(ss)]
     bare <- ss[length(ss)]
     adir <- paste0(ss0, collapse="//")
-    ndir <-  adir %+% "//ESTANDAR"
+    ndir <-  adir %,% "//ESTANDAR"
     dir.create(ndir)
     
-    na1 <- path %+% "-tblAprvAct.csv"
+    na1 <- path %,% "-tblAprvAct.csv"
     a1 <- readCsv(na1)
     aa <- stdjoin(a0,a1)
-    writeCsv(aa, ndir %+% "//" %+% bare %+% "-tblAprvAct.csv")
+    writeCsv(aa, ndir %,% "//" %,% bare %,% "-tblAprvAct.csv")
     
-    nc1 <- path %+% "-tblCenso.csv"
+    nc1 <- path %,% "-tblCenso.csv"
     c1 <- readCsv(nc1)
     cc <- stdjoin(c0,c1)
     # De una vez voy a particionar la tabla 'cc' en lo que es estándar (c0)
@@ -896,11 +896,11 @@ estandariza <- function(path) {
     nn <- length(c0)
     nn1 <-length(cc) # El total de columnas
     ccStd <- cc[,1:nn]
-    writeCsv(ccStd, ndir %+% "//" %+% bare %+% "-tblCenso.csv")
+    writeCsv(ccStd, ndir %,% "//" %,% bare %,% "-tblCenso.csv")
     # Hay extras?
     if (nn1 != nn) {
         ccExt <- data.frame(idAprovechamiento=cc$idAprovechamiento, cc[,(nn+1):nn1, drop=F])
-        writeCsv(ccExt, ndir %+% "//" %+% bare %+% "-EXTRAS.csv")
+        writeCsv(ccExt, ndir %,% "//" %,% bare %,% "-EXTRAS.csv")
     }
 }
 

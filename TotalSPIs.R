@@ -88,15 +88,15 @@ getYear <- function(i) strsplit(names(ss)[i],"-")[[1]][1]
 
 n <- nm - n2 # punto medio
 
-yr0 <- getYear(ini) %+% "-" %+% getYear(n)
-yr1 <- getYear(n+1) %+% "-" %+% getYear(nm)
+yr0 <- getYear(ini) %,% "-" %,% getYear(n)
+yr1 <- getYear(n+1) %,% "-" %,% getYear(nm)
 
 Mcols <- colorRampPalette(c("darkred","red","sandybrown","cornsilk2","lightblue","royalblue3","darkblue"),space="rgb")
 Scols <- Mcols(length(Mbrk))
 
-labs <- names(h0) %+% ", r= " %+% signif(indC,3)
+labs <- names(h0) %,% ", r= " %,% signif(indC,3)
 
-fnam <- prefix %+% "_" %+% k %+% "_Pyramid.png"
+fnam <- prefix %,% "_" %,% k %,% "_Pyramid.png"
 if (file.exists(fnam)) file.remove(fnam)
 
 png(filename = fnam, height = 480, width = 550)

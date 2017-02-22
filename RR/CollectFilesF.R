@@ -18,7 +18,7 @@ CollectFiles <- function(descr="\\.txt",filtroDirs="", path=".") {
 
 ExtractDir <- function(ss, filtroDirs) {
     aa <- strsplit(ss, filtroDirs)[[1]]
-    aa[1] %+% filtroDirs
+    aa[1] %,% filtroDirs
 }
 
 
