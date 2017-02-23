@@ -223,8 +223,34 @@ modalidades: colores o contornos, como los que se muestran en la Fig. 3 y la Fig
 
 ![Mapas comparativosA](Conchos_REL_2a.png)
 
+## 5 TotalSPIs.R
 
+### 5.1 Objetivo
 
+Generar la serie de tiempo de SPIs para la serie promedio de precipitaciones de un área dada y generar los histogramas e índices 
+comparativos, _r_, a partir de la serie de SPIs encontrada.
+
+### 5.2 Entradas
+
+El programa tiene como entrada un único archivo:
+
+* **\<Var-Cuenca-Pts-Ts\>.csv**. Este archivo se apega al formato descrito en la sección 1.3; sin embargo, no se trata de 
+cualquiera de los archivos que salen de esa estapa, sino espicíficamente de archivos de precipitación con datos mensuales durante 
+algún período de varios años. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es 
+ConchosPRE_mm.csv.
+
+### 5.3 Salidas
+
+El programa tiene como salida dos archivos gráficos:
+
+1. **\<Prefix\>\_Pyramid.png**.
+
+2. **\<Prefix\>\_Series.png**.
+
+### 5.4 Funcionamiento
+
+Para habilitar el funcionamiento de este programa, después de ejecutarlo mediante **source("TotalSPIs.R")**, es necesario 
+ejecutar desde la consola la función **main()**.
 
 
 

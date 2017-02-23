@@ -16,7 +16,6 @@ k <- as.numeric(mustGet("Período SPI (meses):"))
 # La tabla de datos:
 dd <- read.csv(fn, row.names = 1)
 
-
 # Para partir la tabla en años exactos
 
 nm <- nrow(dd) - 2 # Número total de meses
@@ -42,16 +41,36 @@ n2 <- ne/2
 
 ss <- apply(sdd,1,mean)
 
+getYearS <- function(aa) do.call(rbind,strsplit(as.character(aa), "-"))[,1]
+
+# Matriz por años:
+
+mt <- do.call(cbind, split(ss, getYearS(names(ss))))
+
+# La recortamos al número de años que se van a considerar
+
+# descartar años del principio si es necesario:
+ds <- floor(ini/12)
+
+mt <- mt[,-ds]
+
+# Serie de promedios mensuales por año:
+s0 <- apply(mt, 1, mean)
+
+# Anomalías de precipitacioón:
+aa <- tail(ss,ne) - s0
+
 # Se divide la serie a la mitad y se calculan los dos SPIs
 # (uno para cada sub-serie), y creamos la salida 
 
 spiX <- getSPIfor_k(ss,k,ini)
 names(spiX) <- tail(names(ss),ne)
 
-mdd <- tbl_df(data.frame(Fecha=names(spiX), pre=tail(ss,ne), spi=spiX))
+# mdd <- tbl_df(data.frame(Fecha=names(spiX), pre=tail(ss,ne), spi=spiX))
+mdd <- tbl_df(data.frame(Fecha=names(spiX), panual=rep(s0,na), an.pre=aa, spi=spiX))
 
 # Transformemmos
-mxx <- mdd %>% gather(variable, value, pre:spi)
+mxx <- mdd %>% gather(variable, value, panual:spi)
 
 p <- ggplot(mxx, aes(x=as.Date.character(Fecha), y=value)) + xlab("Fecha")
 p + geom_col() + facet_grid(variable ~ ., scale="free_y") + ylab("Valor")
