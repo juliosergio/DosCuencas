@@ -243,15 +243,34 @@ ConchosPRE_mm.csv.
 
 El programa tiene como salida dos archivos gráficos:
 
-1. **\<Prefix\>\_Pyramid.png**.
+1. **\<Prefix\>\_Pyramid.png**. Es un archivo gráfico que muestra para, la serie de SPIs del promedio de precipitaciones de 
+de toda el área considerada, los dos histogramas para los períodos _antiguo_ y _reciente_, y los índices comparativos, _r_, 
+para cada uno de los intervalos de los histogramas. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_12_Pyramid.png. La apariencia del gráfico es también como el que se muestra en la Fig. 2.
 
-2. **\<Prefix\>\_Series.png**.
+2. **\<Prefix\>\_Series.png**. Este archivo muestra gráficamente tres series de tiempo, a saber:
+    * **Anomalías de precipitación**. Registra la precipitación _por encima_, o _por debajo_ del promedio mensual de 
+    toda la serie.
+    * **Promedios mensuales**. Registra las precipitaciones promedio mensuales de toda la serie, de tal manera que la
+    suma de este valor con el anterior daría el registro de la precipitación total a lo largo del tiempo.
+    * **SPIs**. Registra los índices SPI a lo largo del tiempo.
+    
+    Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es 
+    ConchosPRE_mm_12_Series.png. La apariencia del gráfico es como el que se muestra en la Fig. 5, a continuación.
+    
+**Figura 5.** Series de anomalías y medias de precipitación y SPIs
+
+![Las 3 series](ConchosPRE_mm_12_Series.png)
+
 
 ### 5.4 Funcionamiento
 
 Para habilitar el funcionamiento de este programa, después de ejecutarlo mediante **source("TotalSPIs.R")**, es necesario 
-ejecutar desde la consola la función **main()**.
+ejecutar desde la consola la función **main()**. En seguida el programa solicitará interactivamente el nombre del archivo que contiene los datos, esta información sirve no sólo para abrir el archivo en cuestión, sino para construír los nombres de los archivos de salida. Posteriormente, el programa pregunta también por el período en meses, en que se promedian los valores de precipitación previos cada mes. Típicamente, el archivo de entrada es alguno de los que se han producido como salida en la etapa descrita en la sección 1.3. El archivo contiene, como columnas, series mensuales de precipitación para un conjunto de puntos, cuyas coordenadas geográficas también se reportan como las dos primeras entradas de cada columna. Las series de tiempo son las mismas para todos los puntos considerados, así que de aquí en adelante se denominará únicamente como _la serie de tiempo_.
 
+Se procede en seguida a calcular los promedios precipitación para toda la cuenca a partir de todas las series puntuales. El 
+resultado es una serie de precipitaciones promedio de la cuenca. De esta serie resultante, se calculan los promedios mensuales 
+y las anomalías de precipitación. Igual, con la serie de precipitaciones promedio se procede al cálculo de los índices SPIs y 
+los compartativos. Con toda esta información se producen los dos archivos gráficos que se han señalado como salidas del programa.
 
 
 
