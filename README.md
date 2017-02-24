@@ -18,7 +18,8 @@ región dada.
 ![Flujo de la info](MapaConceptual.jpg)
 
 En esta figura se muestran los programas con sus respectivas entradas y salidas principales. En seguida 
-se procede a explicar cada uno de los programas.
+se procede a explicar cada uno de los programas. La explicación incluye el objetivo del programa, sus entradas y
+salidas y una breve descripción de su funcionamiento.
 
 ## 1 StationsView.R
 
