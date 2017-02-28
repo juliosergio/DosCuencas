@@ -27,6 +27,9 @@ pp <- read.csv(cuencaF) # frontera de la cuenca
 
 Mbreaks <- seq(-1, 1, length.out = 11)
 
+# Rampa de colores en caso de usar esquema de colores
+Mcols <- colorRampPalette(c("darkred","red","sandybrown","cornsilk2","lightblue","royalblue3","darkblue"),space="rgb")
+
 resp <- mustGet("Elija tipo gráfico: 1) Contornos, 2) Colores =>","1", c("1", "2"))
 
 for (i in inds) {
@@ -47,10 +50,8 @@ for (i in inds) {
     
     if (resp == "1") 
         DrawContCurvs(aa, Mbreaks, pp[,c("Lon","Lat")], tit=t0)
-    else {
-        Mcols <- colorRampPalette(c("darkred","red","sandybrown","cornsilk2","lightblue","royalblue3","darkblue"),space="rgb")
+    else 
         DrawContColors(aa, Mbreaks, Mcols, pp[,c("Lon","Lat")], tit = t0)
-    }
     dev.off()
 }
 
