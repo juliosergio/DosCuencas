@@ -48,6 +48,27 @@ mustGet <- function (prompt, default="", inclSet=NULL) {
     }
 }
 
+group.mean <- function(x, ini=1, size=12) {
+    # Hacer la media por grupos donde el tamaño de cada grupo
+    # es 'size'. La media se inicia a partir índice inicia 'íni'
+    # Se puede usar para calcular promedios de acumulados anuales
+    # ------------
+    
+    # número total de elementos a considerar
+    n <- length(x) - ini + 1
+    m <- floor(n/size) # Número de grupos completos
+    fin <- ini + m*size -1
+    sum(x[ini:fin])/m
+}
+
+# Funciones para la moda
+
+id.mode <- function(tt) as.numeric(names(tt)[which.max(tt)])  # identifica la moda en una tabla de fecuencias
+# La moda de una serie de datos es la composición de la función table(), que calcula las frecuencias
+# en la serie, con id.mode()
+stat.mode <- id.mode %cmp% table # stat.mode(x) donde x es la serie de datos
+get.dif <- function(x) stat.mode(x-lag(x))
+
 
 dist2 <- function(pts, p0, pw=1) {
     # Calcula la distancia del punto p0 a todos los puntos en el conjunto pts
