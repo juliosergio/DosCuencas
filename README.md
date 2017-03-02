@@ -256,7 +256,7 @@ para cada uno de los intervalos de los histogramas. Un ejemplo de este tipo de a
     Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es 
     ConchosPRE_mm_12_Series.png. La apariencia del gráfico es como el que se muestra en la Fig. 5, a continuación.
     
-3. **\<Prefix\>\_CicloAnual.png**. Registra las precipitaciones promedio mensuales de la precipitación diaria de toda la serie, de tal manera que, este valor se emplea para determinar las anomalías de precipitación registradas anteriormente, restandolo del
+3. **\<Prefix\>\_CicloAnual.png**. Registra las precipitaciones promedio mensuales de la precipitación diaria de toda la serie, de tal manera que, este valor se emplea para determinar las anomalías de precipitación mencionadas anteriormente, restandolo del
 valor de la precipitación total en cada mes del año. Un ejemplo de este tipo de archivo, contenido en este repositorio es
 ConchosPRE_mm_12_CicloAnual.png, que también se muestra en la Fig. 6, más adelante.
 
