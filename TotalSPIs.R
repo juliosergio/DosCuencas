@@ -11,6 +11,9 @@ library(ggplot2)
 source("spi_functions.R")
 #debugSource("spi_functions.R") # Si se quiere correr esta parte con debbuger
 
+getYearS <- function(aa) do.call(rbind,strsplit(as.character(aa), "-"))[,1]
+
+
 procesaSerie <- function(ss, k, prefix="Arch") {
     # ss: vector de precipitaciones, con elementos nombrados como fechas.
     #  k: período del SPI en meses
@@ -67,7 +70,6 @@ procesaSerie <- function(ss, k, prefix="Arch") {
     # períodos inicial y final
     
     getYear <- function(i) strsplit(names(ss)[i],"-")[[1]][1]
-    getYearS <- function(aa) do.call(rbind,strsplit(as.character(aa), "-"))[,1]
     
     # Matriz por años:
     
@@ -120,11 +122,17 @@ procesaSerie <- function(ss, k, prefix="Arch") {
     
     # Series de tiempo:
     
+    
+    # Las series totales
+    
     # mdd <- tbl_df(data.frame(Fecha=names(spiX), pre=tail(ss,ne), spi=spiX))
-    mdd <- tbl_df(data.frame(Fecha=names(spiX), panual=rep(s0,na), an.pre=aa, spi=spiX))
+    mdd <- tbl_df(data.frame(Fecha=names(spiX), 
+                             an.pre=aa, 
+                             # panual=rep(s0,na), # <<-YA-NO
+                             spi=spiX))
     
     # Transformemmos
-    mxx <- mdd %>% gather(variable, value, panual:spi)
+    mxx <- mdd %>% gather(variable, value, an.pre:spi)
     
     
     fnam <- prefix %,% "_" %,% k %,% "_Series.png"
@@ -138,6 +146,18 @@ procesaSerie <- function(ss, k, prefix="Arch") {
     # dev.off()
     
     ggsave(fnam, width = 8.5, height = 4.8)
+    
+    # La serie de promedios:
+    
+    x <- c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic")
+    x <- factor(x, levels = x)
+    datos <- data.frame(Fecha=x, prec.med=s0, stringsAsFactors = F)
+    p0 <- ggplot(datos, aes(x=Fecha, y=prec.med)) + xlab("Meses") + ylab("Precip. (mm/día)")
+    p0 + geom_col()
+
+    fnam <- prefix %,% "_" %,% k %,% "_CicloAnual.png"
+    
+    ggsave(fnam, width = 8.5, height = 2.5)
 }
 
 

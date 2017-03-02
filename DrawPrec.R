@@ -7,7 +7,7 @@ source("DrawField.R")
 # debugSource("DrawField.R")
 
 # Leemos el archivo que contiene los datos:
-fnam <- mustGet("Archivo de datos (csv)->") # Por ejemplo ConchosPRE_mm.csv
+fnam <- mustGet("Archivo de datos (csv)->") # Por ejemplo ConchosPRE_mmAcc.csv
 
 # El nombre de la cuenca
 cuenca <- strsplit(fnam, "PRE_mm")[[1]][1]

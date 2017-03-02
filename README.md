@@ -242,25 +242,31 @@ ConchosPRE_mm.csv.
 
 ### 5.3 Salidas
 
-El programa tiene como salida dos archivos gráficos:
+El programa tiene como salida tres archivos gráficos:
 
 1. **\<Prefix\>\_Pyramid.png**. Es un archivo gráfico que muestra para, la serie de SPIs del promedio de precipitaciones de 
 de toda el área considerada, los dos histogramas para los períodos _antiguo_ y _reciente_, y los índices comparativos, _r_, 
 para cada uno de los intervalos de los histogramas. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm_12_Pyramid.png. La apariencia del gráfico es también como el que se muestra en la Fig. 2.
 
-2. **\<Prefix\>\_Series.png**. Este archivo muestra gráficamente tres series de tiempo, a saber:
+2. **\<Prefix\>\_Series.png**. Este archivo muestra gráficamente dos series de tiempo, a saber:
     * **Anomalías de precipitación**. Registra la precipitación _por encima_, o _por debajo_ del promedio mensual de 
-    toda la serie.
-    * **Promedios mensuales**. Registra las precipitaciones promedio mensuales de toda la serie, de tal manera que la
-    suma de este valor con el anterior daría el registro de la precipitación total a lo largo del tiempo.
+    precipitaciones diarias toda la serie.
     * **SPIs**. Registra los índices SPI a lo largo del tiempo.
     
     Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es 
     ConchosPRE_mm_12_Series.png. La apariencia del gráfico es como el que se muestra en la Fig. 5, a continuación.
     
-**Figura 5.** Series de anomalías y medias de precipitación y SPIs
+3. **\<Prefix\>\_CicloAnual.png**. Registra las precipitaciones promedio mensuales de la precipitación diaria de toda la serie, de tal manera que, este valor se emplea para determinar las anomalías de precipitación registradas anteriormente, restandolo del
+valor de la precipitación total en cada mes del año. Un ejemplo de este tipo de archivo, contenido en este repositorio es
+ConchosPRE_mm_12_CicloAnual.png, que también se muestra en la Fig. 6, más adelante.
 
-![Las 3 series](ConchosPRE_mm_12_Series.png)
+    
+**Figura 5.** Series de anomalías y SPIs
+
+![Las 2 series](ConchosPRE_mm_12_Series.png)
+**Figura 6.** Ciclo anual de precipitaciones diarias
+
+![Ciclo anual](ConchosPRE_mm_12_CicloAnual.png)
 
 
 ### 5.4 Funcionamiento
@@ -271,11 +277,41 @@ ejecutar desde la consola la función **main()**. En seguida el programa solicit
 Se procede en seguida a calcular los promedios precipitación para toda la cuenca a partir de todas las series puntuales. El 
 resultado es una serie de precipitaciones promedio de la cuenca. De esta serie resultante, se calculan los promedios mensuales 
 y las anomalías de precipitación. Igual, con la serie de precipitaciones promedio se procede al cálculo de los índices SPIs y 
-los compartativos. Con toda esta información se producen los dos archivos gráficos que se han señalado como salidas del programa.
+los compartativos. Con toda esta información se producen los tres archivos gráficos que se han señalado como salidas del programa.
+
+## 6 DrawPrec.R
+
+### 6.1 Objetivo
+
+El objetivo de este programa es la obtención de un gráfico con los niveles de precipitación anual promedio en un 
+área determinada.
+
+### 6.2 Entradas
+
+El programa tiene como entrada un único archivo:
+
+* **\<Var-Cuenca-Pts-Ts\>.csv**. Este archivo se apega al formato descrito en la sección 1.3; sin embargo, no se trata de 
+cualquiera de los archivos que salen de esa estapa, sino espicíficamente de archivos de precipitación mensual acumulada durante 
+algún período de varios años. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es 
+ConchosPRE_mmAcc.csv.
+
+### 6.3 Salidas
+
+El programa tiene como salida un único archivo:
+
+* **\<Prefix\>\_PreAnual.png**. Este es un archivo gráfico, en el que, por medio de colores se representan los niveles de 
+lluvia anual promedio en un área determinada. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es 
+Conchos_PreAnual.csv, que se muestra también el la Fig. 7, a continuación.
+
+**Figura 7.** Precipitación anual promedio
+
+![Prec anual](Conchos_PreAnual.png)
 
 
+### 6.4 Funcionamiento
 
-
+El programa solicita interactivamente el nombre del archivo a procesar y después de acumular los valores mensuales en el archivo
+de entrada los muestra gráficamente, mediante un código de colores de manera semejante a como se muestra en la Fig. 7.
 
 
 
