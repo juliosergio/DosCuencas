@@ -130,18 +130,23 @@ procesaSerie <- function(ss, k, prefix="Arch") {
                              an.pre=aa, 
                              # panual=rep(s0,na), # <<-YA-NO
                              spi=spiX))
+    # Guardaremos esto para algún posible uso posterior
+    save(mdd, file= prefix %,% "_" %,% k %,% "Struct.RData")
     
     # Transformemmos
     mxx <- mdd %>% gather(variable, value, an.pre:spi)
-    
+    mxx$variable <- sub("an\\.pre", "anom.pre(mm/día)", mxx$variable)
     
     fnam <- prefix %,% "_" %,% k %,% "_Series.png"
     if (file.exists(fnam)) file.remove(fnam)
-    
+
     # png(filename = fnam, height = 480, width = 850)
     
     p <- ggplot(mxx, aes(x=as.Date.character(Fecha), y=value)) + xlab("Fecha")
-    p + geom_col() + facet_grid(variable ~ ., scale="free_y") + ylab("Valor")
+    p + geom_col() + 
+        facet_grid(variable ~ ., scale="free_y") + 
+        ylab("Valor") +
+        geom_vline(aes(xintercept = as.numeric(as.Date.character("1985-01-01"))), colour="darkred", linetype=2)
     
     # dev.off()
     
