@@ -126,27 +126,21 @@ procesaSerie <- function(ss, k, prefix="Arch") {
     # Las series totales
     
     # mdd <- tbl_df(data.frame(Fecha=names(spiX), pre=tail(ss,ne), spi=spiX))
-    mdd <- tbl_df(data.frame(Fecha=names(spiX), 
+    mdd <- data.frame(Fecha=names(spiX), 
                              an.pre=aa, 
                              # panual=rep(s0,na), # <<-YA-NO
-                             spi=spiX))
+                             spi=spiX)
     # Guardaremos esto para algún posible uso posterior
-    save(mdd, file= prefix %,% "_" %,% k %,% "Struct.RData")
+    save(mdd, file= prefix %,% "_" %,% k %,% "Struct.R")
     
-    # Transformemmos
-    mxx <- mdd %>% gather(variable, value, an.pre:spi)
-    mxx$variable <- sub("an\\.pre", "anom.pre(mm/día)", mxx$variable)
+    # Producción del dibujo coordinado de an.pre y spi
     
     fnam <- prefix %,% "_" %,% k %,% "_Series.png"
     if (file.exists(fnam)) file.remove(fnam)
-
-    # png(filename = fnam, height = 480, width = 850)
     
-    p <- ggplot(mxx, aes(x=as.Date.character(Fecha), y=value)) + xlab("Fecha")
-    p + geom_col() + 
-        facet_grid(variable ~ ., scale="free_y") + 
-        ylab("Valor") +
-        geom_vline(aes(xintercept = as.numeric(as.Date.character("1985-01-01"))), colour="darkred", linetype=2)
+    
+    p <- DrwSeries(mdd, 2:3, c("anom.pre(mm/día)", NA))
+    p + geom_vline(aes(xintercept = as.numeric(as.Date.character("1985-01-01"))), colour="darkred", linetype=2)
     
     # dev.off()
     

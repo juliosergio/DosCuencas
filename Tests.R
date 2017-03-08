@@ -74,3 +74,13 @@ mxx <- mdd %>% gather(variable, value, panual:spi)
 
 p <- ggplot(mxx, aes(x=as.Date.character(Fecha), y=value)) + xlab("Fecha")
 p + geom_col() + facet_grid(variable ~ ., scale="free_y") + ylab("Valor")
+
+ff <- function(dd, ...) {
+    margs <- as.list(sys.call())[-(1:2)]
+    print(margs)
+    print(class(margs[[1]]))
+    p <- ggplot(dd, aes(x=a,y=b), geom="point")
+    # Reduce('+', c(list(p),margs))
+    p + eval(margs[[1]])
+}
+

@@ -23,6 +23,7 @@ source(bdir %,% "ManejaErrores.R")
 source(bdir %,% "Sustituyes.R")
 source(bdir %,% "Geodetic.distance.R")
 source(bdir %,% "Intercala.R")
+source(bdir %,% "CoordinatedDrw.R")
 
 mustGet <- function (prompt, default="", inclSet=NULL) {
     # Obtiene un dato en línea, posiblemente obligando a que
