@@ -55,4 +55,44 @@ DrwSeries <- function(mdd, sbst=NULL, sbstLabs=NULL) { #, prefix="Arch_Coo") {
     # ggsave(fnam, width = 8.5, height = 2.4*nc)
 }
 
-
+test <- function(fn="UsumacintaPRE_mm.csv", k=12) {
+    
+    setwd("..")
+    
+    source("spi_functions.R")
+    #debugSource("spi_functions.R") # Si se quiere correr esta parte con debbuger
+    
+    prefix <- strsplit(fn, "PRE_mm.csv", fixed = T)[[1]]
+    dd <- read.csv(fn, row.names = 1)
+    
+    # Exclusivamente las series de datos, 
+    # sdd <- dd[3:(ne+2),] # Se eliminan coordenadas y meses extra (<<YA NO)
+    sdd <- dd[-(1:2),] # Se eliminan coordenadas
+    
+    # Hagamos la serie resumen de los datos:
+    
+    ss <- apply(sdd,1,mean)
+    
+    nm <- length(ss) # Número total de meses
+    na <- floor(nm/12) # Número de años completos
+    # Tenemos que asegurarnos que na sea par:
+    na <- if (na%%2) na-1 else na
+    # El número de meses efectivos que se tratarán:
+    ne <- na*12
+    
+    ini <- nm - ne + 1 # Inicio real de la serie
+    
+    ssProm <- getPrecOnTimescale(ss, k, ini)
+    ss <- tail(ss,ne)
+    dd <- data.frame(Fecha=names(ss),  prec=ss, precProm=ssProm)
+    # Salvamos para uso posterior
+    save(dd, file=prefix %,% "preAcc.RData")
+    
+    p <- DrwSeries(dd, sbstLabs = c(NA, "precProm-" %,% k))
+    
+    fnam <- prefix %,% "PreYPreAcc.png"
+    if (file.exists(fnam)) file.remove(fnam)
+    
+    p
+    ggsave(fnam, width = 8.5, height = 4.8)
+}
