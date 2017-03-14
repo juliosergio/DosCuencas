@@ -47,17 +47,31 @@ f
 
 compf <- qnorm %cmp% pgammaX
 
-a <- data.frame(x=c(3,9), category="Gamma")
-b <- data.frame(x=c(-4,4), category="Normal")
-miXa <- c(6.3, 6.3, 9.5); miYa <- c(-0.05, pgammaX(6.3), pgammaX(6.3))
-miXb <- c(-5.5, compf(6.3), compf(6.3)); miYb <- c(pgammaX(6.3), pgammaX(6.3), -0.05)
-c <- data.frame(x=miXa, y=miYa, category="Gamma")
-d <- data.frame(x=miXb, y=miYb, category="Normal")
+ctg <- factor(c("Gamma (mm/día)", "Normal"), levels = c("Gamma (mm/día)", "Normal"))
+
+a <- data.frame(x=c(3,9), category=ctg[1])
+b <- data.frame(x=c(-4,4), category=ctg[2])
+miXa <- c(6.3, 6.3, 9); miYa <- c(0, pgammaX(6.3), pgammaX(6.3))
+miXb <- c(-4, compf(6.3), compf(6.3)); miYb <- c(pgammaX(6.3), pgammaX(6.3), 0)
+c <- data.frame(x=miXa, y=miYa, category=ctg[1])
+d <- data.frame(x=miXb, y=miYb, category=ctg[2])
 
 
-f <- ggplot(a, aes(x)) + stat_function(fun=pgammaX) + stat_function(data = b, mapping = aes(x), fun = pnorm)
+f <- ggplot(a, aes(x)) + 
+    stat_function(fun=pgammaX) + 
+    stat_function(data = b, mapping = aes(x), fun = pnorm) +
+    ylab("Probabilidad")
 
-f <- f + geom_path(data=c, aes(x,y), arrow = arrow()) + geom_path(data=d, aes(x,y), arrow = arrow())
+f <- f + 
+    geom_path(data=c, aes(x,y), arrow = arrow(), linetype="dashed", colour="red") + 
+    geom_path(data=d, aes(x,y), arrow = arrow(), linetype="dashed", colour="red") +
+    geom_text(data=data_frame(x=c(6.5,8.7), y=c(0,0.86), label=c("6.3", "0.797"), 
+                              category=ctg[1]), 
+              aes(x,y,label=label), inherit.aes=FALSE, colour="red") +
+    geom_text(data=data_frame(x=c(-4,1.4), y=c(0.86,0), label=c("0.797", "0.832"), 
+                              category=ctg[2]), 
+              aes(x,y,label=label), inherit.aes=FALSE, colour="red")
+    
 
 f + facet_wrap("category", scales = "free_x")
 
