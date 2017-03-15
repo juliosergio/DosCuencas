@@ -10,29 +10,33 @@ bdir <- "CUENCAS"
 
 cuencas <- list.files(bdir)
 
+# Variables a examinar:
+vars <- c("PRE", "TMAX", "TMIN")
+
 for (cc in cuencas) {
     # Directorio c/cuenca:
     cdir <- paste0(bdir, "/", cc)
-    # Los archivos en cada cuenca que terminan en ".._Rmens.txt":
-    files <- system2("ls", paste0(cdir, "/*_Rmens.txt"), stdout=T)
-    for (ff in files) {
-        # El nombre del archivo sin el apéndice ".._Rmens.txt"
-        bare <- strsplit(ff, "_Rmens." , fixed=T)[[1]][1] # Sin "_Rmens.txt"
-        # Se lee el archivo como una tabla de "dplyr"
-        tt <- tbl_df(read.table(ff, header=T)) 
+    
+    for (vv in vars) {
+        # El nombre del archivo sin el apéndice ".._mm.csv"
+        bare <- cdir %,% "/" %,% cc %,% vv
+        # Nombre del archivo con la información
+        ff <- bare %,% "_mm.csv"
+        # Se lee el archivo
+        t0 <- read.csv(ff, row.names = 1)
+        # quitamos coordenadas
+        tt <- t0[-(1:2),]
         # La operación de resumen, agrupada por (mes)
-        tt <- tt %>% 
-            group_by(mes) %>%
-            summarise(mApp=mean(ppAcc), 
-                      sdApp=sd(ppAcc),
-                      mmTmax=mean(mTmax),
-                      sdTmax=sd(mTmax),
-                      mmTmin=mean(mTmin),
-                      sdTmin=sd(mTmin))  
+        f0 <- as.integer(sapply(strsplit(rownames(tt),"-", fixed = T), '[', 2)) # meses de la serie
+        rMean <- as.matrix(aggregate(tt, list(mes=f0), mean))[,-1] # Sin col del mes
+        rSDev <- as.matrix(aggregate(tt, list(mes=f0), sd))[,-1]
+        n <- nrow(rMean); m <- ncol(rMean)
+        rClima <- array(c(rMean, rSDev), c(n, m, 2), dimnames = list(1:n, colnames(rMean), c("mean", "sd")))
+        # rClima es un arreglo con 3 dim: mes X punto(estación) X {"mean", "sd"}
         # Nuevo nombre del archivo:
-        postfijo <- "_ClimaMens.txt"
-        newname <- paste0(bare, postfijo)
-        # reescribimos la tabla, en el mismo directorio, con el nuevo nombre:
-        write.table(tt, newname, row.names=F)
+        postfijo <- "_ClimaMens.RData"
+        newname <- bare %,% postfijo
+        # Se guarda el arreglo, en el mismo directorio, con el nuevo nombre:
+        save(rClima, file=newname)
     }
 }
