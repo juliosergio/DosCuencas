@@ -41,12 +41,20 @@ for (cc in cuencas) {
         rClima <- rbind(apply(rResu, 2, mean), apply(rResu, 2, sd))
         rownames(rClima) <- c("mean", "sd")
         
+        # De una vez se harán las anomalías anuales
+        rAnomAnual <- NULL
+        for (i in 1:nrow(rResu)) {
+            rAnomAnual <- rbind(rAnomAnual, 10*(rResu[i,]-rClima["mean",])/rClima["sd",])
+        }
+        rownames(rAnomAnual) <- rownames(rResu)
+        rAnomAnual <- as.data.frame(rAnomAnual)
+        
         # El resumen estadístico:
         rSummary <- apply(rResu, 2, summary)
         # Nuevo nombre del archivo:
-        postfijo <- "_ResuAnualYClima.RData" # contiene rResu y rClima
+        postfijo <- "_Resu_Clima_Anom_Anual.RData" # contiene rResu rClima y rAnom
         newname <- bare %,% postfijo
-        # Se guarda el arreglo, en el mismo directorio, con el nuevo nombre:
-        save(rResu, rClima, rSummary, file=newname) # Se guardan los tres objetos
+
+        save(rResu, rClima, rSummary, rAnomAnual, file=newname) # Se guardan los cuatro objetos
     }
 }
