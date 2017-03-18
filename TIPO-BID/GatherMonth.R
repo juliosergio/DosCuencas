@@ -15,13 +15,29 @@ vars <- c("PRE", "TMAX", "TMIN")
 varA <- c("App", "Tmax", "Tmin")
 varPr <- c("m", "mm", "mm")
 
-Tfinal <- NULL
+tarea1 <- function(tte, xx, yy="est") {
+    # Convierte todas las columnas, salvo la primera,
+    # en valores, identificados por la columna con
+    # nombre 'xx'
+    # tte: tabla de entrada
+    # xx: Nombre de la columna 
+    # -----------------------
+    # xx <- vvPr %,% vvA
+    n <- ncol(tte)
+    tte <- tte %>% gather(est, xx, 2:n) # Tidyr no interpreta bien xx
+    names(tte)[2:3] <- c(yy,xx)
+    return(tte)
+}
+
+MegaT <- NULL
 
 for (cc in cuencas) {
     # Directorio c/cuenca:
     cdir <- paste0(bdir, "/", cc)
     
-    for (i in 1:length(vars)) {
+    m <- length(vars)
+    
+    for (i in 1:m) {
         vv <- vars[i]
         vvA <- varA[i]
         vvPr <- varPr[i]
@@ -38,18 +54,17 @@ for (cc in cuencas) {
         b <- rClima[,,"sd"]
         tta <- tbl_df(cbind(mes=as.integer(rownames(a)),a))
         ttb <- tbl_df(cbind(mes=as.integer(rownames(b)),b))
-        n <- ncol(tta)
-        xx <- vvPr %,% vvA
-        tta <- tta %>% gather(est, xx, 2:n) # Tidyr no interpreta bien xx
-        names(tta)[3] <- xx
         
-        xx <- "sd" %,% vvA
-        ttb <- ttb %>% gather(est, xx, 2:n)
-        names(ttb)[3] <- xx
-        
-        tt <- bind_cols(tta, ttb[,3])
-        tt$cuenca <- cc
+        tta <- tarea1(tta, vvPr %,% vvA)
+        ttb <- tarea1(ttb, "sd" %,% vvA)
+
+        if (i==1) tt <- tta[,1:2] %>% mutate(cuenca=cc)
+        tt <- bind_cols(tt, tta[,3], ttb[,3])
     }
     
-    Tfinal <- bind_rows(Tfinal, tt)
+    MegaT <- bind_rows(MegaT, tt)
 }
+
+MegaT$cuenca <- as.factor(MegaT$cuenca)
+# Se salva la MegaT en el sitio que le corresponde:
+save(MegaT, file="GLOBAL/MegaTClima.RData")
