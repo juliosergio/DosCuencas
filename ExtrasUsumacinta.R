@@ -1,6 +1,7 @@
 # ExtrasUsumacinta.R
 library(MASS)
 
+source("RR/MiBiblioteca.R", chdir = T)
 source("RR/CoordinatedDrw.R", chdir = T)
 dir <- getwd()
 setwd("RR")
@@ -39,13 +40,12 @@ f <- ggplot(data.frame(x=c(3, 9)), aes(x)) + stat_function(fun=pgammaX)
 f
 
 
-
 #------------
 # library(ggplot2)
 
 # pgammaX <- function(x) pgamma(x, shape = 64.57849, scale = 0.08854802)
 
-compf <- qnorm %cmp% pgammaX
+spi0 <- qnorm %cmp% pgammaX
 
 ctg <- factor(c("Gamma (mm/día)", "Normal"), levels = c("Gamma (mm/día)", "Normal"))
 
@@ -74,5 +74,14 @@ f <- f +
     
 
 f + facet_wrap("category", scales = "free_x")
+
+
+# La serie de SPIs correspondiente a la serie de promedios
+
+dd$spi <- spi0(dd$precProm)
+
+p <- DrwSeries(dd, 4)
+p
+
 
 

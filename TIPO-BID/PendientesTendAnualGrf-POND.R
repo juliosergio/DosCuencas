@@ -129,8 +129,8 @@ for (jj in 1:3) { # Un archivo gráfico por variable
     # Se manifestará mediante ashurado
     ashura <- c(-1,25)[1 + aa]
     barplot(ttrr[[1+jj]], main=titles[jj], density=ashura, 
-            names=letters[1:nc], 
-            # names=cuencas, las=2,
+            # names=letters[1:nc], 
+            names=cuencas, # las=2,
             xlab="Watersheds", ylab=usc[jj])
 }
 # Hacemos el gráfico alterno de temperaturas
@@ -146,8 +146,8 @@ ashura <- c(-1,25)[1 + aa]
 barplot(ttrr$aTmax, density = ashura, 
         ylim=range(ttrr$aTmax, ttrr$aTmin),
         main=titles[4], 
-        names=letters[1:nc], 
-        # names=cuencas, las=2,
+        # names=letters[1:nc], 
+        names=cuencas, # las=2,
         xlab="Watersheds", ylab=usc[4])
 
 # Mann-Kendall significance:
