@@ -14,7 +14,7 @@ library(ggplot2)
 # getYearS <- function(aa) do.call(rbind,strsplit(as.character(aa), "-"))[,1]
 
 
-DrwSeries <- function(mdd, sbst=NULL, sbstLabs=NULL) { #, prefix="Arch_Coo") {
+DrwSeries <- function(mdd, sbst=NULL, sbstLabs=NULL, scales="free_y") { #, prefix="Arch_Coo") {
     # mdd: es un data.frame con la primer columna como fechas y
     #      de nombre Fecha
     # sbst: subconjunto de columnas que se graficarán
@@ -49,7 +49,8 @@ DrwSeries <- function(mdd, sbst=NULL, sbstLabs=NULL) { #, prefix="Arch_Coo") {
     p <- ggplot(mxx, aes(x=as.Date.character(Fecha), y=value)) + xlab("Fecha")
     return (
         p + geom_col() + 
-        facet_grid(variable ~ ., scale="free_y") + 
+        facet_grid(variable ~ ., 
+                   scales=scales) + 
         ylab("Valor") 
     )
     # ggsave(fnam, width = 8.5, height = 2.4*nc)

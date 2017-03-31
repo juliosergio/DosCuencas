@@ -42,7 +42,7 @@ getSPIfromPrec <- function(precipitation){
         #locate each data point on cdf by applying fit.cdf function for each location
         #cdf probabilites
         # these will be unformly distributed on interval 1/years
-        cdfs <- sapply(mdata,fit.cdf)
+        cdfs <- fit.cdf(mdata)
         #invert normal
         spi.t <- qnorm(cdfs)
         spi.tp <- spi.t[ spi.t != Inf] #drop Inf
@@ -68,11 +68,77 @@ getSPIfromPrec <- function(precipitation){
     return(as.numeric(t(spi.o))[1:Nt]) # <- JSS: Más fácil así.
 }
 
+
+spiGamma <- function(precipitation){
+    
+    #takes a vector of precipitation values 
+    #and returns a vector of spi values
+    
+    
+    Nt <- length(precipitation)
+    #include full years data only
+    years <- ceiling(Nt/12)
+    #-NO_SE USA>>> full.years <- trunc(Nt/12)
+    #-NO_SE USA>>> Nt.f <- full.years*12
+    monthsInCurrentYear <- Nt %% 12
+    #monthly analysis
+    spi.o <- array(NA,c(years,12))
+    for (m in 1:12)
+    {
+        mdata <- precipitation[seq(from=m, to=Nt, by=12)]
+        
+        # Cumulative Gamma cdf's for each month 
+        # NO>>> fit.cdf <- ecdf(mdata)
+        
+        mn <- mean(mdata)
+        v <- var(mdata)
+        th <- v/mn
+        k <- mn/th
+        
+        # Pgamma acumulado
+        
+        fit.cdf <- creaff(pgamma, shape = k, scale = th)
+        
+        #locate each data point on cdf by applying fit.cdf function for each location
+        #cdf probabilites
+        # these will be unformly distributed on interval 1/years
+        cdfs <- fit.cdf(mdata)
+        #invert normal
+        spi.t <- qnorm(cdfs)
+        # NO-NECESARIO>> spi.tp <- spi.t[ spi.t != Inf] #drop Inf
+        # NO-NECESARIO>> ff <- function(x) (1-sd(c(x,spi.tp)))^2 # x reemplazaría a los que resultaron Inf
+        # NO-NECESARIO>> #replace Inf with the value that sets sd(spi)=1 or mean = 0 (minimises ff)
+        # NO-NECESARIO>> spi.t[spi.t==Inf] <- optimize(ff,lower=0,upper=100)$minimum
+        # NO-NECESARIO>> # ensure mean is zero. spi.t is normally distributed with mean zero and sd approx 1
+        # NO-NECESARIO>> spi.t <- spi.t - mean(spi.t)
+        #>>> ifelse( !(monthsInCurrentYear==0),ifelse (m <=monthsInCurrentYear, spi.o[,m]<-spi.t, spi.o[,m]<- c(spi.t,0) ), spi.o[,m]<-spi.t)
+        # Lo anterior, en R estándar:
+        spi.o[,m] <- if ((monthsInCurrentYear)&(monthsInCurrentYear < m)) c(spi.t,0) else spi.t
+    }
+    
+    #>>> spi <- array(0,Nt)
+    #>>> 
+    #>>> for ( t in 1:Nt){
+    #>>>     month <- (t-1)%%12 + 1
+    #>>>     year <- 1 + trunc((t-1)/12)
+    #>>>     spi[t] <- spi.o[year,month]
+    #>>>     
+    #>>> }
+    #>>> return(spi)
+    return(as.numeric(t(spi.o))[1:Nt]) # <- JSS: Más fácil así.
+}
+
+
 # La función que encuentra el SPI para una escala de tiempo es la 
 # composición de las dos funciones anteriores:
 
 getSPIfor_k <- getSPIfromPrec %cmp% getPrecOnTimescale  # Esto es: getSPIfor_k(prec, k), k=núm de meses
                                                         # o bien getSPIfor_k(prec, k, ini), ini=inicio de la serie
+
+# Y si viene de un ajuste a una función de distribución Gamma:
+ 
+getSPI.Gamma.for_k <- spiGamma %cmp% getPrecOnTimescale # Igual: getSPI.Gamma.for_k(prec, k), o bien
+                                                        # getSPI.Gamma.for_k(prec, k, ini)
 
 test <- function() {
     #generate some sample recipitation values using a weibull distribution
