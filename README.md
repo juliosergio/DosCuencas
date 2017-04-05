@@ -160,7 +160,7 @@ y donde en vez de representar el ancho de las barras a escala, simplemente se se
 Dada la construcción de los SPIs como elementos de una distribución normal estandarizada, y ya que los dos histogramas 
 mencionados antes provienen de esa distribución, para cada intervalo, la suma de las alturas de las barras de los períodos a lo largo de todos los puntos considerados, es la misma. Por ejemplo, si se considera el intervalo central, en la Fig. 2, la suma de las _alturas_ de las barras en este caso es 0.368 + 0.299 = 0.667, y ese valor se mantiene constante para para todos los puntos considerados. Con esto en mente, para cada intervalo de los histogramas, definimos el siguiente índice:
 
-<center> ![Formula 1](daum_equation_1487185111127.png) </center>
+![Formula 1](daum_equation_1487185111127.png)
 
 donde, _h_<sub>_0_</sub>, representa la altura de la barra del histograma del primer período y _h_<sub>_1_</sub>, 
 representa la altura de la barra del histograma del segundo período. En la Fig. 2, el valor del índice _r_ para 
