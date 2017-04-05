@@ -17,8 +17,42 @@ th <- v/m
 k <- m/th
 
 dgammaX <- function(x) dgamma(x, shape = k, scale = th)
+
+
 ff <- fitdistr(pp, dgamma, start = list(shape=10, scale=0.1)) # Maximum likelyhood
 dgammaXX <- function(x) dgamma(x, shape = ff$estimate[["shape"]], scale = ff$estimate[["scale"]])
+
+# Con la manera de calcular de Thom:
+GammaParams <- function(x) {
+    # Calcula los parámetros de la distribución Gamma con el método apuntado por 
+    # Thom, H.C.S. (1966), a partir de la Maximum Likelyhood
+    mx <- mean(x)
+    A4 <- (log(mx) - mean(log(x)))*4
+    alpha <- (1+sqrt(1+A4/3))/A4 # shape
+    beta <- mx/alpha             # scale
+    return(c(alpha, beta))
+}
+
+GammaParams0 <- function(x, niter=100, eps=0.001) {
+    # Calcula los parámetros de la distribución Gamma con el método apuntado por 
+    # Wikipedia, a partir de la Maximum Likelyhood 
+    # https://en.wikipedia.org/wiki/Gamma_distribution#Cumulative_distribution_function
+    mx <- mean(x)
+    S <- (log(mx) - mean(log(x)))
+    alpha <- (3-S+sqrt((S-3)^2+24*S))/(12*S) # Valor inicial
+    # Otra aprox>>> alpha <- (1+sqrt(1+A4/3))/A4 # shape
+    for (i in 1:niter) {
+        # La nueva alpha (Newton-Raphson)
+        alpha.n <- alpha - (log(alpha) - digamma(alpha) - S)/(1/alpha - psigamma(alpha, 1))
+        delt <- abs(1-alpha.n/alpha)
+        if (delt <= eps)
+            break
+        alpha <- alpha.n
+    }
+    beta <- mx/alpha.n            # scale
+    return(c(shape=alpha.n, scale=beta, delt=delt, iter=i))
+}
+
 
 # Pgamma acumulado
 
