@@ -33,25 +33,6 @@ GammaParams <- function(x) {
     return(c(alpha, beta))
 }
 
-GammaParams0 <- function(x, niter=100, eps=0.001) {
-    # Calcula los parámetros de la distribución Gamma con el método apuntado por 
-    # Wikipedia, a partir de la Maximum Likelyhood 
-    # https://en.wikipedia.org/wiki/Gamma_distribution#Cumulative_distribution_function
-    mx <- mean(x)
-    S <- (log(mx) - mean(log(x)))
-    alpha <- (3-S+sqrt((S-3)^2+24*S))/(12*S) # Valor inicial
-    # Otra aprox>>> alpha <- (1+sqrt(1+A4/3))/A4 # shape
-    for (i in 1:niter) {
-        # La nueva alpha (Newton-Raphson)
-        alpha.n <- alpha - (log(alpha) - digamma(alpha) - S)/(1/alpha - psigamma(alpha, 1))
-        delt <- abs(1-alpha.n/alpha)
-        if (delt <= eps)
-            break
-        alpha <- alpha.n
-    }
-    beta <- mx/alpha.n            # scale
-    return(c(shape=alpha.n, scale=beta, delt=delt, iter=i))
-}
 
 
 # Pgamma acumulado
@@ -150,7 +131,7 @@ spi1 <- function(precipitation){
 
 
 
-ctg <- factor(c("Gamma (mm/día)", "Normal"), levels = c("Gamma (mm/día)", "Normal"))
+ctg <- factor(c("Gamma (mm/day)", "Normal"), levels = c("Gamma (mm/day)", "Normal"))
 
 a <- data.frame(x=c(3,9), category=ctg[1])
 b <- data.frame(x=c(-4,4), category=ctg[2])
@@ -163,7 +144,7 @@ d <- data.frame(x=miXb, y=miYb, category=ctg[2])
 f <- ggplot(a, aes(x)) + 
     stat_function(fun=pgammaX) + 
     stat_function(data = b, mapping = aes(x), fun = pnorm) +
-    ylab("Probabilidad")
+    ylab("Probability")
 
 f <- f + 
     geom_path(data=c, aes(x,y), arrow = arrow(), linetype="dashed", colour="red") + 
@@ -176,7 +157,7 @@ f <- f +
               aes(x,y,label=label), inherit.aes=FALSE, colour="red")
     
 
-f + facet_wrap("category", scales = "free_x")
+f + facet_wrap("category", scales = "free_x") + xlab("")
 
 
 # La serie de SPIs correspondiente a la serie de promedios

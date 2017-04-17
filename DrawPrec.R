@@ -45,9 +45,9 @@ if (file.exists(fnam)) file.remove(fnam)
 png(filename = fnam)
 
 if (resp == "1{") {
-    DrawContCurvs(aa, Mbreaks, pp[,c("Lon","Lat")], tit=t0)
+    DrawContCurvs(aa, Mbreaks, pp[,c("Lon","Lat")], xlab = "Longitude", ylab = "Latitude") # tit=t0)
 } else {
-    DrawContColors(aa, Mbreaks, Mcols, pp[,c("Lon","Lat")], tit = t0)
+    DrawContColors(aa, Mbreaks, Mcols, pp[,c("Lon","Lat")], xlab = "Longitude", ylab = "Latitude") #tit = t0)
 }
 dev.off()
 

@@ -25,6 +25,11 @@ source(bdir %,% "Geodetic.distance.R")
 source(bdir %,% "Intercala.R")
 source(bdir %,% "CoordinatedDrw.R")
 
+lagpad <- function(x, k) {
+    if (k>0) return (c(rep(NA, k), x)[1 : length(x)] )
+    return (c(x[(-k+1) : length(x)], rep(NA, -k)));
+}
+
 mustGet <- function (prompt, default="", inclSet=NULL) {
     # Obtiene un dato en línea, posiblemente obligando a que
     # se encuentre en un conjunto de strings dado:
@@ -86,12 +91,6 @@ mdist2 <- function(pts, mp0, pw=1) {
 
 # Está vacío un vector?
 is.empty.v <- function(v) !as.logical(length(v))
-
-composite <- function(f,g) function(...) f(g(...))
-# como operador:
-`%cmp%` <- composite # Operador de composición de funciones
-
-`%,%` <- function(x, y) paste0(x, y) # Operador de concatenación de cadenas
 
 # Comparación que incluye NAs
 compareNA <- function(v1,v2) {

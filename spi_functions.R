@@ -6,6 +6,42 @@
 if (!exists("LEIDO.MiBiblioteca")) source("RR/MiBiblioteca.R", chdir = T)
 
 
+GammaParams0 <- function(x, niter=100, eps=0.001) {
+    # Calcula los parámetros de la distribución Gamma con el método apuntado por 
+    # Wikipedia, a partir de la Maximum Likelyhood 
+    # https://en.wikipedia.org/wiki/Gamma_distribution#Cumulative_distribution_function
+    mx <- mean(x)
+    S <- (log(mx) - mean(log(x)))
+    alpha <- (3-S+sqrt((S-3)^2+24*S))/(12*S) # Valor inicial
+    # Otra aprox>>> alpha <- (1+sqrt(1+A4/3))/A4 # shape
+    for (i in 1:niter) {
+        # La nueva alpha (Newton-Raphson)
+        alpha.n <- alpha - (log(alpha) - digamma(alpha) - S)/(1/alpha - psigamma(alpha, 1))
+        delt <- abs(1-alpha.n/alpha)
+        if (delt <= eps)
+            break
+        alpha <- alpha.n
+    }
+    beta <- mx/alpha.n            # scale
+    return(c(shape=alpha.n, scale=beta, delt=delt, niter=i))
+}
+
+
+creaCumGamma <- function(x) {
+    # Crea una función de distribución acumulativa Gamma a partir
+    # de los datos proporcionados
+    pp <- GammaParams0(x)
+    function(x) pgamma(x, shape = pp[["shape"]], scale = pp[["scale"]])
+}
+
+creaCumECDF <- ecdf #* function(x) {
+    #* Crea una función empírica acumulativa de distribución a
+    #* partir de los datos dados
+#*    ecdf(x)
+#*}
+
+
+
 getPrecOnTimescale <- function(precipitation, k, ini=1){
     # precipitation is a vector of monthly precipitation values
     # returns monthly precipation averaged over current month and prior k-1 months
@@ -140,6 +176,72 @@ getSPIfor_k <- getSPIfromPrec %cmp% getPrecOnTimescale  # Esto es: getSPIfor_k(p
 getSPI.Gamma.for_k <- spiGamma %cmp% getPrecOnTimescale # Igual: getSPI.Gamma.for_k(prec, k), o bien
                                                         # getSPI.Gamma.for_k(prec, k, ini)
 
+
+creaCumFuncts <- function(
+    precipitation, # La precipitación
+    ffcreadora     # funcion creadora de funciones una de {creaCumGamma, creaCumECDF}
+) {
+    # Crea la familia de funciones acumulativas de distribución
+    # Una función por mes
+    # a partir de la serie dada
+    
+    Nt <- length(precipitation)
+    # Lp <- split(precipitation, rep_len(1:12,Nt)) # Precipitaciones por mes
+    # lapply(Lp, ffcreadora)
+    by(precipitation, rep_len(1:12,Nt), ffcreadora)
+}
+
+creaSPIFuncts <- function(
+    precipitation, # la precipitacion
+    ffcreadora,     # función creadora de funciones; una de {creaCumGamma, creaCumECDF}
+    ...             # parametros adicionales (k, ini)
+) {
+    creaCumFuncts(getPrecOnTimescale(precipitation, ...), ffcreadora)
+}
+
+applyFuncts <- function(
+    funcs,             # familia de funciones
+    datos #,           # los datos: un vector
+    # rule             # regla de aplicación
+) {
+    # Aplica cíclicamente las funciones sobre los datos
+    oo <- getOption("warn")
+    options(warn = -1)
+    rr <- mapply(function(f, x) f(x), funcs, datos)
+    options(warn = oo)
+    return(rr)
+}
+
+
+renormaliza <- function(x) {
+    # Elimina imperfecciones en una distribución normal
+    x.tp <- x[ x != Inf] #drop Inf
+    ff <- function(x) (1-sd(c(x, x.tp)))^2 # x reemplazaría a los que resultaron Inf
+    #replace Inf with the value that sets sd(x)=1 or mean = 0 (minimises ff)
+    x[x==Inf] <- optimize(ff,lower=0,upper=100)$minimum
+    # ensure mean is zero. x is normally distributed with mean zero and sd approx 1
+    return(x - mean(x))
+}
+
+getSPInew <- function(precipitation, ffcreadora, k, ...) { # ini) {
+    avrPrec <- getPrecOnTimescale(precipitation, k, ...)
+    ss <- qnorm(
+        applyFuncts(
+            creaCumFuncts(avrPrec, ffcreadora),
+            avrPrec
+        )
+    )
+    if (any(is.infinite(ss))) {
+        for (i in 1:12) {
+            ii <- rep(F,12)
+            ii[i] <- T
+            ss[ii] <- renormaliza(ss[ii])
+        }
+    }
+    return (ss)
+}
+
+
 test <- function() {
     #generate some sample recipitation values using a weibull distribution
     set.seed(2000)
@@ -162,4 +264,12 @@ test <- function() {
     spi.cols <- colorRampPalette(c("darkred","red","yellow","white","green","blue","darkblue"),space="rgb")
     filled.contour(dates,1:12,spi,col=spi.cols(11),xlab="",ylab="time-scale (months)",cex.lab=1.7,font.axis=2,font.lab=2,levels=spi.breaks,key.title="SPI")
     title(main="sample SPI",cex.main=2)
+    
+    # Hagamos prueba con la nueva forma de hacerlo
+    
+    nspi <- sapply(1:12, function(i) getSPInew(precipitation, creaCumECDF, i))
+    
+    filled.contour(dates,1:12,nspi,col=spi.cols(11),xlab="",ylab="time-scale (months)",cex.lab=1.7,font.axis=2,font.lab=2,levels=spi.breaks,key.title="SPI")
+    title(main="NNNsample SPI",cex.main=2)
+    
 }

@@ -60,7 +60,7 @@ procesaSerie <- function(ss, k, prefix="Arch") {
     
     # Cálculo de los índices de cambio:
     
-    indC <- (h1-h0)/(h1+h0)
+    indC <- ((h1-h0)/(h1+h0))*100 # Para que sea porcentaje 
     
     mm <- max(c(h0,h1))
     
@@ -131,7 +131,7 @@ procesaSerie <- function(ss, k, prefix="Arch") {
                              # panual=rep(s0,na), # <<-YA-NO
                              spi=spiX)
     # Guardaremos esto para algún posible uso posterior
-    save(mdd, file= prefix %,% "_" %,% k %,% "Struct.R")
+    save(mdd, file= prefix %,% "_" %,% k %,% "Struct.RData")
     
     # Producción del dibujo coordinado de an.pre y spi
     
@@ -139,7 +139,7 @@ procesaSerie <- function(ss, k, prefix="Arch") {
     if (file.exists(fnam)) file.remove(fnam)
     
     
-    p <- DrwSeries(mdd, 2:3, c("anom.pre(mm/día)", NA))
+    p <- DrwSeries(mdd, 2:3, c("Pre.anom(mm/day)", NA), xlab = "Years", ylab = "")
     p + geom_vline(aes(xintercept = as.numeric(as.Date.character("1985-01-01"))), colour="darkred", linetype=2)
     
     # dev.off()
@@ -148,10 +148,10 @@ procesaSerie <- function(ss, k, prefix="Arch") {
     
     # La serie de promedios:
     
-    x <- c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic")
+    x <- month.abb # c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic")
     x <- factor(x, levels = x)
     datos <- data.frame(Fecha=x, prec.med=s0, stringsAsFactors = F)
-    p0 <- ggplot(datos, aes(x=Fecha, y=prec.med)) + xlab("Meses") + ylab("Precip. (mm/día)")
+    p0 <- ggplot(datos, aes(x=Fecha, y=prec.med)) + xlab("Months") + ylab("Precipitation (mm/day)")
     p0 + geom_col()
 
     fnam <- prefix %,% "_" %,% k %,% "_CicloAnual.png"

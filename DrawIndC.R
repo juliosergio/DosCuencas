@@ -25,21 +25,25 @@ inds <- evalstr(mustGet("Índices de intervalos a graficar" %,% " [1.." %,% nn %
 
 pp <- read.csv(cuencaF) # frontera de la cuenca
 
-Mbreaks <- seq(-1, 1, length.out = 11)
+Mbreaks <- seq(-100, 100, length.out = 11)
 
 # Rampa de colores en caso de usar esquema de colores
 Mcols <- colorRampPalette(c("darkred","red","sandybrown","cornsilk2","lightblue","royalblue3","darkblue"),space="rgb")
 
 resp <- mustGet("Elija tipo gráfico: 1) Contornos, 2) Colores =>","1", c("1", "2"))
 
+rrDatos <- NULL
+
 for (i in inds) {
-    datos <- EIndC[i,] # Sigue con la estructura de data.frame
+    tag <- letters[i-2]
+    datos <- EIndC[i,]*100 # Sigue con la estructura de data.frame y va multiplicado por 100 (en %)
     
     aa <- ArreglaMtx(EIndC[1,], EIndC[2,], datos)
     
     # YA-NO>>> Mbreaks <- pretty(range(datos),10)
     
-    t0 <- "Relación cambio SPI para intervalo " %,% rownames(datos)
+    t0 <- tag %,% ":   (%)r for interval " %,% rownames(datos)
+    # t0 <- "Relación cambio SPI para intervalo " %,% rownames(datos)
     # puntos de la cuenca:
     
     fnam <- cuenca %,% components[2] %,% "_REL_" %,% (i-2) %,% ".png"
@@ -49,9 +53,17 @@ for (i in inds) {
     png(filename = fnam)
     
     if (resp == "1") 
-        DrawContCurvs(aa, Mbreaks, pp[,c("Lon","Lat")], tit=t0)
+        DrawContCurvs(aa, Mbreaks, pp[,c("Lon","Lat")], tit=t0, xlab = "Longitude", ylab = "Latitude")
     else 
-        DrawContColors(aa, Mbreaks, Mcols, pp[,c("Lon","Lat")], tit = t0)
+        DrawContColors(aa, Mbreaks, Mcols, pp[,c("Lon","Lat")], tit = t0, xlab = "Longitude", ylab = "Latitude")
+    
     dev.off()
+    rrDatos <- rbind(rrDatos, datos)
 }
+
+# Guardaremos la información usada
+
+fnamRD <- cuenca %,% components[2] %,% "_PrcentDATOS.RData"
+save(rrDatos, file = fnamRD)
+
 
