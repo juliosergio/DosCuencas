@@ -179,8 +179,8 @@ q
 # La nueva implementación de SPI para dist. Gamma
 dd$NG.spi <- getSPI(dd$precProm, creaCumGamma)
 r <- DrwSeries(dd, c(7,5), c("Gamma.SPI","ECDF.SPI"), xlab = "Años", ylab = "Valor", scales = "fixed")
-r
-ggsave("SPI.Grijalva2CF.png")
+r + geom_vline(aes(xintercept = as.numeric(as.Date.character("1985-01-01"))), colour="darkred", linetype=2)
+ggsave("SPI.Usumacinta2CF.png")
 
 
 ffs <- creaCumFuncts(dd$precProm, creaCumGamma)
@@ -262,4 +262,12 @@ plotDCurves(ffs, "Gammas Acumuladas", "Probabilidad")
 ffs <- creaCumFuncts(dd$precProm, creaCumECDF)
 plotDCurves(ffs, "ECDFs (Acumuladas)", "Probabilidad")
 ggsave("FamiliaECDFsAcc.png")
+
+# Histograma
+br <- c(-3, -2, -1.5, -1, 1, 1.5, 2, 3)
+Mcols <- colorRampPalette(c("darkred","red","sandybrown","cornsilk2","lightblue","royalblue3","darkblue"),space="rgb")
+Scols <- Mcols(length(br))
+
+(h <- hist(dd$ecdf.spi, breaks = br, col = Scols, xlab = "SPI", ylab = "Densidad", main = "", ylim = c(0,dnorm(0))))
+curve(dnorm, lwd=2, col="navyblue", add = T)
 
