@@ -20,6 +20,7 @@ DrwSeries <- function(mdd, sbst=NULL, sbstLabs=NULL, scales="free_y", xlab="x", 
     # sbst: subconjunto de columnas que se graficarán
     # sbstLabs: Etiquetas, en orden, que se usarán en vez de los nombres
     #           de las columnas a graficar (puede llevar NAs)
+    # scales: Entre otros puede adoptar también "fixed"
     # YANO-> prefix: prefijo que se añade a los archivos generados.
     # ========================================================
     

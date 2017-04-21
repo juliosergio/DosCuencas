@@ -79,7 +79,7 @@ ff <- function(dd, ...) {
     margs <- as.list(sys.call())[-(1:2)]
     print(margs)
     print(class(margs[[1]]))
-    p <- ggplot(dd, aes(x=a,y=b), geom="point")
+    p <- ggplot(dd, aes(x=a,y=b), layer(dd, geom=GeomPoint, inherit.aes = TRUE, position = "identity"))
     # Reduce('+', c(list(p),margs))
     p + eval(margs[[1]])
 }

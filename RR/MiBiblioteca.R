@@ -25,7 +25,7 @@ source(bdir %,% "Geodetic.distance.R")
 source(bdir %,% "Intercala.R")
 source(bdir %,% "CoordinatedDrw.R")
 
-lagpad <- function(x, k) {
+lagpad <- function(x, k=1) {
     if (k>0) return (c(rep(NA, k), x)[1 : length(x)] )
     return (c(x[(-k+1) : length(x)], rep(NA, -k)));
 }

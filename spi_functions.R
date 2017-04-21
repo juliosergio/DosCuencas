@@ -34,6 +34,13 @@ creaCumGamma <- function(x) {
     function(x) pgamma(x, shape = pp[["shape"]], scale = pp[["scale"]])
 }
 
+creaGamma <- function(x) {
+    # Crea una función de distribución Gamma a partir
+    # de los datos proporcionados
+    pp <- GammaParams0(x)
+    function(x) dgamma(x, shape = pp[["shape"]], scale = pp[["scale"]])
+}
+
 creaCumECDF <- ecdf #* function(x) {
     #* Crea una función empírica acumulativa de distribución a
     #* partir de los datos dados
@@ -180,6 +187,7 @@ getSPI.Gamma.for_k <- spiGamma %cmp% getPrecOnTimescale # Igual: getSPI.Gamma.fo
 creaCumFuncts <- function(
     precipitation, # La precipitación
     ffcreadora     # funcion creadora de funciones una de {creaCumGamma, creaCumECDF}
+                   #  o creaGamma, para función no acumulativa - para ilustraciones
 ) {
     # Crea la familia de funciones acumulativas de distribución
     # Una función por mes
@@ -189,6 +197,11 @@ creaCumFuncts <- function(
     # Lp <- split(precipitation, rep_len(1:12,Nt)) # Precipitaciones por mes
     # lapply(Lp, ffcreadora)
     by(precipitation, rep_len(1:12,Nt), ffcreadora)
+}
+
+getGammaParams <- function (precipitation) {
+    Nt <- length(precipitation)
+    aggregate(precipitation, list(rep_len(1:12,Nt)), GammaParams0)$x
 }
 
 creaSPIFuncts <- function(
@@ -223,12 +236,11 @@ renormaliza <- function(x) {
     return(x - mean(x))
 }
 
-getSPInew <- function(precipitation, ffcreadora, k, ...) { # ini) {
-    avrPrec <- getPrecOnTimescale(precipitation, k, ...)
+getSPI <- function(precipitation, ffcreadora) {
     ss <- qnorm(
         applyFuncts(
-            creaCumFuncts(avrPrec, ffcreadora),
-            avrPrec
+            creaCumFuncts(precipitation, ffcreadora),
+            precipitation
         )
     )
     if (any(is.infinite(ss))) {
@@ -240,6 +252,9 @@ getSPInew <- function(precipitation, ffcreadora, k, ...) { # ini) {
     }
     return (ss)
 }
+
+# La siguiente función toma una serie de precipitaciones mensuales, hace los k-promedios y luego encuentra el SPI
+getSPInew <- function(precipitation, ffcreadora, k, ...) getSPI(getPrecOnTimescale(precipitation, k, ...), ffcreadora)
 
 
 test <- function() {

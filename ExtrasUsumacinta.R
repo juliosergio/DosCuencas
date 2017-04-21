@@ -176,3 +176,90 @@ dd$AltG.spi <- spiGamma(dd$precProm)
 q <- DrwSeries(dd, 4:6, scales="fixed")
 q
 
+# La nueva implementación de SPI para dist. Gamma
+dd$NG.spi <- getSPI(dd$precProm, creaCumGamma)
+r <- DrwSeries(dd, c(7,5), c("Gamma.SPI","ECDF.SPI"), xlab = "Años", ylab = "Valor", scales = "fixed")
+r
+ggsave("SPI.Grijalva2CF.png")
+
+
+ffs <- creaCumFuncts(dd$precProm, creaCumGamma)
+ff0 <- creaCumFuncts(dd$precProm, creaGamma)
+
+
+# Dibujado de ff0
+
+meses <- sprintf("%02d", 1:12)
+p9 <- Reduce(
+    function(x, y) {
+        # i <- length(x$layers)+1
+        x + stat_function(fun = ff0[[y]], 
+                          aes_(colour = meses[y]))
+    }, 
+    1:length(ff0), 
+    init = ggplot(data.frame(x = range(dd$precProm)), aes(x = x))
+)
+p9 + 
+    scale_x_continuous(name = "Precipitación (mm/día)") + # ,
+    #breaks = seq(0, 1, 0.2),
+    # limits=c(0, 1)) +
+    scale_y_continuous(name = "Densidad") +
+    ggtitle("Gammas") +
+    scale_colour_brewer(palette="Paired") +
+    labs(colour = "Mes")  #+
+    # guides(colour = guide_legend(order=3))
+ggsave("FamiliaGammas.png")
+
+# Ahora las acumuladas
+p9 <- Reduce(
+    function(x, y) {
+        # i <- length(x$layers)+1
+        x + stat_function(fun = ffs[[y]], 
+                          aes_(colour = meses[y]))
+    }, 
+    1:length(ffs), 
+    init = ggplot(data.frame(x = range(dd$precProm)), aes(x = x))
+)
+p9 + 
+    scale_x_continuous(name = "Precipitación (mm/día)") + # ,
+    #breaks = seq(0, 1, 0.2),
+    # limits=c(0, 1)) +
+    scale_y_continuous(name = "Probabilidad") +
+    ggtitle("Gammas Acumuladas") +
+    scale_colour_brewer(palette="Paired") +
+    labs(colour = "Mes")  #+
+# guides(colour = guide_legend(order=3))
+ggsave("FamiliaGammasAcc.png")
+
+# **************************************************************
+# Otra aproximación al problema, agregando una lista de geoms al
+# plot inicial:
+
+# Aquí la función que se quiera:
+f0 <- ff0 
+# f0 <- ffs
+
+plotDCurves <- function(f0, title="", ylab="") {
+    ggplot(data.frame(x = range(dd$precProm)), aes(x)) + 
+        lapply(1:length(f0), 
+               function(ii) {stat_function(mapping = aes_(colour=meses[ii]),
+                                           fun = f0[[ii]] )}) +
+        scale_x_continuous(name = "Precipitación (mm/día)") + 
+        scale_y_continuous(name = ylab) +
+        ggtitle(title) +
+        scale_colour_brewer(palette="Paired") +
+        labs(colour = "Mes") 
+}
+
+# Las curvas hechas antes ahora con la nueva función
+
+plotDCurves(ff0, "Gammas", "Densidad") 
+
+plotDCurves(ffs, "Gammas Acumuladas", "Probabilidad")
+
+# Hagamos ahora lo propio con las funciones ECDF
+
+ffs <- creaCumFuncts(dd$precProm, creaCumECDF)
+plotDCurves(ffs, "ECDFs (Acumuladas)", "Probabilidad")
+ggsave("FamiliaECDFsAcc.png")
+
