@@ -36,7 +36,7 @@ Mcols <- colorRampPalette(c("cornsilk2","lightblue","royalblue3","darkblue"),spa
 
 resp <- mustGet("Elija tipo gráfico: 1) Contornos, 2) Colores =>","1", c("1", "2"))
 
-t0 <- "Precipitaciones anuales medias cuenca: " %,% cuenca
+t0 <- "Precip. anuales medias cuenca: " %,% cuenca
 
 fnam <- cuenca %,% "_PreAnual.png"
 
@@ -45,9 +45,9 @@ if (file.exists(fnam)) file.remove(fnam)
 png(filename = fnam)
 
 if (resp == "1{") {
-    DrawContCurvs(aa, Mbreaks, pp[,c("Lon","Lat")], xlab = "Longitude", ylab = "Latitude") # tit=t0)
+    DrawContCurvs(aa, Mbreaks, pp[,c("Lon","Lat")], xlab = "Longitud", ylab = "Latitud") # tit=t0)
 } else {
-    DrawContColors(aa, Mbreaks, Mcols, pp[,c("Lon","Lat")], xlab = "Longitude", ylab = "Latitude") #tit = t0)
+    DrawContColors(aa, Mbreaks, Mcols, pp[,c("Lon","Lat")], xlab = "Longitud", ylab = "Latitud") #tit = t0)
 }
 dev.off()
 

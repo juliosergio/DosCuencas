@@ -268,6 +268,6 @@ br <- c(-3, -2, -1.5, -1, 1, 1.5, 2, 3)
 Mcols <- colorRampPalette(c("darkred","red","sandybrown","cornsilk2","lightblue","royalblue3","darkblue"),space="rgb")
 Scols <- Mcols(length(br))
 
-(h <- hist(dd$ecdf.spi, breaks = br, col = Scols, xlab = "SPI", ylab = "Densidad", main = "", ylim = c(0,dnorm(0))))
+(h <- hist(dd$ecdf.spi, breaks = br, col = Scols, xlab = "SPI", ylab = "Densidad", labels = T, main = "", ylim = c(0,dnorm(0))))
 curve(dnorm, lwd=2, col="navyblue", add = T)
 

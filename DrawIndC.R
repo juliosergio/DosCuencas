@@ -42,7 +42,8 @@ for (i in inds) {
     
     # YA-NO>>> Mbreaks <- pretty(range(datos),10)
     
-    t0 <- tag %,% ":   (%)r for interval " %,% rownames(datos)
+    # t0 <- tag %,% ":   (%)r for interval " %,% rownames(datos)
+    t0 <- tag %,% ":   (%)r para intervalo " %,% rownames(datos)
     # t0 <- "Relación cambio SPI para intervalo " %,% rownames(datos)
     # puntos de la cuenca:
     
@@ -53,9 +54,9 @@ for (i in inds) {
     png(filename = fnam)
     
     if (resp == "1") 
-        DrawContCurvs(aa, Mbreaks, pp[,c("Lon","Lat")], tit=t0, xlab = "Longitude", ylab = "Latitude")
+        DrawContCurvs(aa, Mbreaks, pp[,c("Lon","Lat")], tit=t0, xlab = "Longitud", ylab = "Latitud")
     else 
-        DrawContColors(aa, Mbreaks, Mcols, pp[,c("Lon","Lat")], tit = t0, xlab = "Longitude", ylab = "Latitude")
+        DrawContColors(aa, Mbreaks, Mcols, pp[,c("Lon","Lat")], tit = t0, xlab = "Longitud", ylab = "Latitud")
     
     dev.off()
     rrDatos <- rbind(rrDatos, datos)
