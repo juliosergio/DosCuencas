@@ -4,6 +4,7 @@ library(MASS)
 source("RR/MiBiblioteca.R", chdir = T)
 source("RR/CoordinatedDrw.R", chdir = T)
 source("spi_functions.R")
+source("Density.R")
 
 dir <- getwd()
 setwd("RR")
@@ -21,6 +22,7 @@ dgammaX <- function(x) dgamma(x, shape = k, scale = th)
 
 ff <- fitdistr(pp, dgamma, start = list(shape=10, scale=0.1)) # Maximum likelyhood
 dgammaXX <- function(x) dgamma(x, shape = ff$estimate[["shape"]], scale = ff$estimate[["scale"]])
+
 
 # Con la manera de calcular de Thom:
 GammaParams <- function(x) {
@@ -167,7 +169,10 @@ dd$spi <- spi0(dd$precProm)
 # p <- DrwSeries(dd, 4)
 # p
 
-dd$ecdf.spi <-getSPIfromPrec(dd$precProm)
+# En vez de ésta:
+# >> dd$ecdf.spi <-getSPIfromPrec(dd$precProm)
+# Usaré esta:
+dd$ecdf.spi <- getSPI(dd$precProm, creaCumECDF) # Equivale a la comentada pero con el nuevo método
 
 # Con la otra gamma
 
@@ -181,6 +186,13 @@ dd$NG.spi <- getSPI(dd$precProm, creaCumGamma)
 r <- DrwSeries(dd, c(7,5), c("Gamma.SPI","ECDF.SPI"), xlab = "Años", ylab = "Valor", scales = "fixed")
 r + geom_vline(aes(xintercept = as.numeric(as.Date.character("1985-01-01"))), colour="darkred", linetype=2)
 ggsave("SPI.Usumacinta2CF.png")
+
+
+# para función de distribución basada en Kernel:
+dd$Kern.spi <- getSPI(dd$precProm, pfunCreate)
+r <- DrwSeries(dd, c(7,5,8), c("Gamma.SPI","ECDF.SPI","Kern.SPI"), xlab = "Años", ylab = "Valor", scales = "fixed")
+r + geom_vline(aes(xintercept = as.numeric(as.Date.character("1985-01-01"))), colour="darkred", linetype=2)
+ggsave("SPI.Usumacinta3CF.png")
 
 
 ffs <- creaCumFuncts(dd$precProm, creaCumGamma)
@@ -262,6 +274,11 @@ plotDCurves(ffs, "Gammas Acumuladas", "Probabilidad")
 ffs <- creaCumFuncts(dd$precProm, creaCumECDF)
 plotDCurves(ffs, "ECDFs (Acumuladas)", "Probabilidad")
 ggsave("FamiliaECDFsAcc.png")
+
+# Y ahora con las funciones a partir de Kernel
+ffk <- creaCumFuncts(dd$precProm, pfunCreate)
+plotDCurves(ffk, "Distrib (Kernel)", "Probabilidad")
+ggsave("FamiliaKernAcc.png")
 
 # Histograma
 br <- c(-3, -2, -1.5, -1, 1, 1.5, 2, 3)

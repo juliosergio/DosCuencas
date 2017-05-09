@@ -237,6 +237,14 @@ renormaliza <- function(x) {
 }
 
 getSPI <- function(precipitation, ffcreadora) {
+    # precipitation: Serie de datos de precipitación
+    # ffcreadora: función creadora de una función de distribución a partir
+    #             de la serie de datos de precipitación; estos se estratifican
+    #             por mes para tener como resultato una familia de 12 funciones
+    #             de distribución. Aquí se pueden usar, p.ej., 'creaCumGamma()',
+    #             'creaCumECDF()', o incluso 'pfunCreate()', que es una función para
+    #             crear funciones de distribución a partir de las funciones de densidad
+    #             'kernel' (https://en.wikipedia.org/wiki/Kernel_density_estimation)
     ss <- qnorm(
         applyFuncts(
             creaCumFuncts(precipitation, ffcreadora),
