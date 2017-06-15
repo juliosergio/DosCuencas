@@ -20,7 +20,8 @@ k <- m/th
 dgammaX <- function(x) dgamma(x, shape = k, scale = th)
 
 
-ff <- fitdistr(pp, dgamma, start = list(shape=10, scale=0.1)) # Maximum likelyhood
+# Usaré los parámetros resultantes anteriores como inicialización de Maximum likelihood
+ff <- fitdistr(pp, dgamma, start = list(shape=k, scale=th)) # Maximum likelihood
 dgammaXX <- function(x) dgamma(x, shape = ff$estimate[["shape"]], scale = ff$estimate[["scale"]])
 
 
@@ -251,8 +252,9 @@ ggsave("FamiliaGammasAcc.png")
 f0 <- ff0 
 # f0 <- ffs
 
-plotDCurves <- function(f0, title="", ylab="") {
-    ggplot(data.frame(x = range(dd$precProm)), aes(x)) + 
+plotDCurves <- function(f0, title="", ylab="", rr=range(dd$precProm)) {
+    # rr <- range(dd$precProm)
+    ggplot(data.frame(x = rr) , aes(x)) + 
         lapply(1:length(f0), 
                function(ii) {stat_function(mapping = aes_(colour=meses[ii]),
                                            fun = f0[[ii]] )}) +
@@ -271,8 +273,8 @@ plotDCurves(ffs, "Gammas Acumuladas", "Probabilidad")
 
 # Hagamos ahora lo propio con las funciones ECDF
 
-ffs <- creaCumFuncts(dd$precProm, creaCumECDF)
-plotDCurves(ffs, "ECDFs (Acumuladas)", "Probabilidad")
+ffs1 <- creaCumFuncts(dd$precProm, creaCumECDF)
+plotDCurves(ffs1, "ECDFs (Acumuladas)", "Probabilidad")
 ggsave("FamiliaECDFsAcc.png")
 
 # Y ahora con las funciones a partir de Kernel
@@ -287,4 +289,63 @@ Scols <- Mcols(length(br))
 
 (h <- hist(dd$ecdf.spi, breaks = br, col = Scols, xlab = "SPI", ylab = "Densidad", labels = T, main = "", ylim = c(0,dnorm(0))))
 curve(dnorm, lwd=2, col="navyblue", add = T)
+
+
+cats <- c("Gammas Acumuladas", "ECDFs (Acumuladas)", "Distrib (Kernel)")
+ctg0 <- factor(cats, levels = cats)
+
+pDCurves <- function(f0, rr=range(dd$precProm), ctg=1, p=NULL) {
+    d0 <- data.frame(x = rr, category=ctg)
+    p <- if (is.null(p)) ggplot(data.frame(x=rr), aes(x)) else p
+    p + 
+        lapply(1:length(f0), 
+               function(ii) {stat_function(data=d0, mapping = aes_(colour=meses[ii]),
+                                           fun = f0[[ii]] )}) 
+}
+
+
+doForma <- function(title="", ylab="", pal="Paired", colab="Mes") {
+    list(
+        scale_x_continuous(name = "Precipitación (mm/día)"),
+        scale_y_continuous(name = ylab),
+        ggtitle(title),
+        scale_colour_brewer(palette=pal),
+        labs(colour = colab)
+    )
+}
+
+
+c1 <- pDCurves(ffs, ctg = ctg0[1])
+c2 <- pDCurves(ffs1, ctg = ctg0[2], p=c1)
+c3 <- pDCurves(ffk, ctg = ctg0[3], p=c2)
+
+c3 + facet_wrap("category", nrow = 3) + doForma(ylab = "Probabilidad")
+ggsave("Usumacinta3Familias.png", width = 7, height = 6.5)
+
+###################################
+
+pDDCurves <- function(f0, rr=range(dd$precProm), ctg=1, p=NULL, colr="Mes") {
+    d0 <- data.frame(x = rr, category=ctg)
+    p <- if (is.null(p)) ggplot(data.frame(x=rr), aes(x)) else p
+    p + 
+        lapply(1:length(f0), 
+               function(ii) {stat_function(data=data.frame(d0, Mes=meses[ii]), 
+                                           mapping = aes(color=get(colr)),
+                                           fun = f0[[ii]] )}) 
+}
+
+
+
+c1 <- pDDCurves(ffs, ctg = ctg0[1])
+c2 <- pDDCurves(ffs1, ctg = ctg0[2], p=c1)
+c3 <- pDDCurves(ffk, ctg = ctg0[3], p=c2)
+c3 + doForma(ylab = "Probabilidad") + facet_wrap("category", nrow = 3)
+ggsave("Usumacinta3Familias.png", width = 7, height = 6)
+
+
+c1 <- pDDCurves(ffs, ctg = ctg0[1], colr = "category")
+c2 <- pDDCurves(ffs1, ctg = ctg0[2], p=c1, colr = "category")
+c3 <- pDDCurves(ffk, ctg = ctg0[3], p=c2, colr = "category")
+c3 + doForma("Comparativo por mes", ylab = "Probabilidad", pal="Set1", colab = "Fun.Distrib") + facet_wrap("Mes", nrow = 4)
+ggsave("UsumacintaComparaDistribMens.png", width = 7, height = 6)
 
