@@ -11,7 +11,7 @@ if (!exists("LEIDO.MiBiblioteca")) source("RR/MiBiblioteca.R", chdir = T)
 # source("Fechas.R")
 
 # Lectura NetCDF
-fn <- mustGet("Nombre del archivo:") # Por ejemplo ../CLICOMg/CLICOM_pre_1960-2008.nc
+fn <- mustGet("Nombre del archivo:") # Por ejemplo ../CLICOMg/CLICOM_pre_1960-2008_mm.nc (mensual)
 fchIni <- as.Date.character(mustGet("Fecha inicio [Default:1960-01-01]", "1960-01-01"))
 nn <- nc_open(fn)
 # El nombre de la variable que nos interesa

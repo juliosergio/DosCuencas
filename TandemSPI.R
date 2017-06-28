@@ -12,7 +12,7 @@
 
 
 source("spi_functions.R")
-#debugSource("spi_functions.R") # Si se quiere correr esta parte con debbuger
+# debugSource("spi_functions.R") # Si se quiere correr esta parte con debbuger
 
 # Leemos el archivo que contiene los datos:
 fn <- mustGet("Archivo de datos (csv)->") # Por ejmplo ConchosPRE_mm.csv
