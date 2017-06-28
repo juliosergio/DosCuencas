@@ -44,10 +44,27 @@ if (file.exists(fnam)) file.remove(fnam)
 
 png(filename = fnam)
 
-if (resp == "1{") {
-    DrawContCurvs(aa, Mbreaks, pp[,c("Lon","Lat")], xlab = "Longitud", ylab = "Latitud") # tit=t0)
+p0 <- pp[,c("Lon","Lat")]
+# col <- 1
+i <- 1
+otra <- " ALGUNA"
+repeat
+{
+    if (mustGet("Incluir" %,% otra %,% " Subcuenca? [S/N]:>", "N", c("s","S","n","N")) %in% c("s","S")) {
+        i <- i+1
+        fn <- mustGet("Archivo de SubCuenca (csv)->")
+        px <- read.csv(fn) # frontera de la cuenca
+        p0 <- rbind(p0[,c("Lon","Lat")], c(NA,NA), px[,c("Lon","Lat")])
+        otra <- " OTRA"
+    } else 
+        break
+}
+col <- 1:i
+
+if (resp == "1") {
+    DrawContCurvs(aa, Mbreaks, p0, xlab = "Lon", ylab = "Lat", col=col) # tit=t0)
 } else {
-    DrawContColors(aa, Mbreaks, Mcols, pp[,c("Lon","Lat")], xlab = "Longitud", ylab = "Latitud") #tit = t0)
+    DrawContColors(aa, Mbreaks, Mcols, p0, xlab = "Lon", ylab = "Lat", col=col) #tit = t0)
 }
 dev.off()
 

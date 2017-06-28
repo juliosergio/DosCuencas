@@ -47,15 +47,16 @@ ArreglaMtx <- function(x, y, datos) {
 }
     
 
-DrawContColors <- function(what, Mbreaks, rampaCol, pp, xlab="Lon", ylab="Lat", tit="") {
+DrawContColors <- function(what, Mbreaks, rampaCol, pp, xlab="Lon", ylab="Lat", tit="", col=1) {
     ## Dibuja a colores, de acuerdo a la rampa de colores, rampaCol, los datos
     ## contenidos en what (lista con lasx, lasy, y matriz de valoresm,mm)
-    ## y el contorno dado en pp
+    ## y el (o los) contorno(s) dado(s) en pp
     ## Mbreaks: Donde se rompen los valores para graficar
+    ## col: colores de los polígonos limtantes
     
     # rangos del contorno
-    pp_rx <- range(pp[[1]])
-    pp_ry <- range(pp[[2]])
+    pp_rx <- range(pp[[1]], na.rm = T)
+    pp_ry <- range(pp[[2]], na.rm = T)
     
     filled.contour(what$lasx,what$lasy,what$mm,col=rampaCol(length(Mbreaks)),
                    xlab=xlab, ylab=ylab,
@@ -63,19 +64,21 @@ DrawContColors <- function(what, Mbreaks, rampaCol, pp, xlab="Lon", ylab="Lat", 
                    # cex.lab=1.7,font.axis=2,font.lab=2,
                    levels=Mbreaks,key.title="m", 
                    main = tit,
-                   plot.axes = {axis(1); axis(2); grid();polygon(pp[[1]], pp[[2]])})
+                   plot.axes = {axis(1); axis(2); grid();polygon(pp[[1]], pp[[2]], border = col)})
 }
 
-DrawContCurvs <- function(what, Mbreaks, pp, xlab="Lon", ylab="Lat", tit="") {
+DrawContCurvs <- function(what, Mbreaks, pp, xlab="Lon", ylab="Lat", tit="", col=1) {
     ## Dibuja con curvas, los datos
     ## contenidos en what (lista con lasx, lasy, y matriz de valoresm,mm)
-    ## y el contorno dado en pp
+    ## y el (o los) contorno(s) dado(s) en pp
     ## Mbreaks: Donde se rompen los valores para graficar
+    ## col: colores de los polígonos limtantes
     
     # rangos del contorno
-    pp_rx <- range(pp[[1]])
-    pp_ry <- range(pp[[2]])
-
+    # rangos del contorno
+    pp_rx <- range(pp[[1]], na.rm = T)
+    pp_ry <- range(pp[[2]], na.rm = T)
+    
     plot(x = 0, y = 0, type = "n", xlim = pp_rx, ylim = pp_ry,
          xlab = "Lon", ylab = "Lat")
     u <- par("usr")
@@ -83,6 +86,6 @@ DrawContCurvs <- function(what, Mbreaks, pp, xlab="Lon", ylab="Lat", tit="") {
     contour(what$lasx, what$lasy, what$mm, lty = "solid", add = TRUE, levels=Mbreaks,
             vfont = c("sans serif", "plain"))
     grid()
-    polygon(pp[[1]], pp[[2]])
+    polygon(pp[[1]], pp[[2]], border = col)
     title(tit, font = 4)
 }
