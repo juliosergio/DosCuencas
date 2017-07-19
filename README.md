@@ -260,6 +260,11 @@ para cada uno de los intervalos de los histogramas. Un ejemplo de este tipo de a
 valor de la precipitación total en cada mes del año. Un ejemplo de este tipo de archivo, contenido en este repositorio es
 ConchosPRE_mm_12_CicloAnual.png, que también se muestra en la Fig. 6, más adelante.
 
+4. **\<Prefix\>\_Struct.RData**. Este es un archivo, en formato RData, que guarda las estructuras de información que se 
+emplearon para construír todos los archivos anteriores. El nombre de la variable que guarda esas estructuras es **mdd**. 
+Como un ejemplo de este tipo de archivo está ConchosPRE_mm_12Struct.RData. Para tener acceso a la variable, el archivo se
+tiene que leer con la función **load()**.
+
     
 **Figura 5.** Series de anomalías y SPIs
 
