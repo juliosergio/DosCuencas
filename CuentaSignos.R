@@ -69,7 +69,7 @@ test <- function () {
     legend("bottomright", c("Subperíodo 1", "Subperíodo 2"), col=c("black", "red"), lty=c(2,1))
     
     boxplot(list(rr0[[2]]$N, rr1[[2]]$N), names=c("Subperíodo 1", "Subperíodo 2"), 
-            border = c("black", "red"), main="Signo Indistinto")
+            border = c("black", "red"), main="Anchos con signo Indistinto")
     
     # Los negativos y los positivos
     N.pos.0 <- rr0[[2]][sgn > 0, N]
