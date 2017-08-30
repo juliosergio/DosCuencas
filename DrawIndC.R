@@ -28,7 +28,11 @@ pp <- read.csv(cuencaF) # frontera de la cuenca
 Mbreaks <- seq(-100, 100, length.out = 11)
 
 # Rampa de colores en caso de usar esquema de colores
-Mcols <- colorRampPalette(c("darkred","red","sandybrown","cornsilk2","lightblue","royalblue3","darkblue"),space="rgb")
+# Mcols <- colorRampPalette(c("darkred","red","sandybrown","cornsilk2","lightblue","royalblue3","darkblue"),space="rgb")
+
+# Mcols <- colorRampPalette(c("darkslategrey", "darkslategray3", "darkslategray1", "cornsilk2", "mediumpurple1", "mediumpurple3", "slateblue4"),space="rgb")
+
+Mcols <- colorRampPalette(c("darkslategrey", "darkslategray3", "cornsilk2", "mediumpurple3", "slateblue4"),space="rgb")
 
 resp <- mustGet("Elija tipo gráfico: 1) Contornos, 2) Colores =>","1", c("1", "2"))
 
