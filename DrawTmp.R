@@ -47,6 +47,8 @@ if (mustGet("Guardar rango y detener [s/n]:", default = "N") %in% c("s", "S")) {
 if (mustGet("Combinar rango, con guardado [s/n]:", default = "N") %in% c("s", "S")) {
     rr <- range(rr, readRDS("rangoGuardado.rds"))
     saveRDS(rr, file = "rangoGuardado.rds")
+    if (mustGet("Salir [s/n]?", default = "N") %in% c("s", "S"))
+        stop("TERMINANDO AQUI")
 }
 
 aa <- ArreglaMtx(vT[1,], vT[2,], panual)
