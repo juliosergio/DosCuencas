@@ -30,14 +30,17 @@ lagpad <- function(x, k=1) {
     return (c(x[(-k+1) : length(x)], rep(NA, -k)));
 }
 
-mustGet <- function (prompt, default="", inclSet=NULL) {
+mustGet <- function (prompt, default="", inclSet=NULL, filtra = function(x)x, stay=T) {
     # Obtiene un dato en línea, posiblemente obligando a que
     # se encuentre en un conjunto de strings dado:
     # USO: rr <- mustGet("De una respuesta [S/N] >", "n", c("s","S","n","N"))
     # o cheque contra una expresión regular:
     # USO: rr <- mustGet("De una fecha [YYYY-DD-MM] >", "", E_Fecha)
+    #  flitra(): Es una función para filtrar la entrada
+    #  stay:     Indica si debe permanecer en el ciclo hasta obtener alguna respuesta
     repeat {
-        resp <- if ((resp<-readline(prompt))=="") default else resp
+        resp <- if ((resp<-filtra(readline(prompt)))=="") default else resp
+        if (!stay & resp=="") return(resp) # Sale del ciclo
         if (resp != "") {
             if (is.null(inclSet)) return(resp)
             # Lo que viene en inclSet es o un conjunto de strings
@@ -54,18 +57,32 @@ mustGet <- function (prompt, default="", inclSet=NULL) {
     }
 }
 
-group.mean <- function(x, ini=1, size=12) {
+group.mean <- function(x, ini=1, nels=length(x)-ini+1, size=12) {
     # Hacer la media por grupos donde el tamaño de cada grupo
     # es 'size'. La media se inicia a partir índice inicia 'íni'
+    # 'nels' es el número total de elementos del vector 'x' a 
+    # cosiderar a partir de 'ini'
     # Se puede usar para calcular promedios de acumulados anuales
     # ------------
     
     # número total de elementos a considerar
-    n <- length(x) - ini + 1
-    m <- floor(n/size) # Número de grupos completos
+    m <- floor(nels/size) # Número de grupos completos
     fin <- ini + m*size -1
     sum(x[ini:fin])/m
 }
+
+trim.mean <- function(x, ini=1, nels=length(x)-ini+1, ...) {
+    # Hacer la media recortada
+    # La media se inicia a partir índice inicia 'íni'
+    # 'nels' es el número total de elementos del vector 'x' a 
+    # cosiderar a partir de 'ini'
+    # ------------
+    
+    # número total de elementos a considerar
+    fin <- ini + nels -1
+    mean(x[ini:fin], ...)
+}
+
 
 # Funciones para la moda
 

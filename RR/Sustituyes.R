@@ -31,3 +31,8 @@ StandardText <- function(vv) {
     )
 }
 
+cambiaNLs <- function(s) {
+    # Cambia la secuencia "\n" por 
+    # <NEWLINE> en la entrada
+    gsub("\\\\n", "\n", s)
+}

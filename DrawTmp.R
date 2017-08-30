@@ -1,26 +1,27 @@
 ###################################################
-# DrawPrec.R
-#     Dibuja la precipitación media anual
+# DrawTmp.R
+#     Dibuja la temperatura media anual
 ##################################################
 
 source("DrawField.R")
 # debugSource("DrawField.R")
 
 # Leemos el archivo que contiene los datos:
-fnam <- mustGet("Archivo de datos (csv)->") # Por ejemplo ConchosPRE_mmAcc.csv
+fnam <- mustGet("Archivo de datos (csv)->") # Por ejemplo ConchosTMAX_mm.csv
 
 # El nombre de la cuenca
-cuenca <- strsplit(fnam, "PRE_mm")[[1]][1]
+cuenca <- strsplit(fnam, "TM(AX|IN)_mm")[[1]][1]
+cuencaVar <- strsplit(fnam, "_mm")[[1]][1]
 
 cuencaF <- cuenca %,% "_puntos.csv"
 
 # La tabla de datos:
-precT <- read.csv(fnam, row.names = 1)
+vT <- read.csv(fnam, row.names = 1)
 
 # Número de renglones
-nn <- nrow(precT)
+nn <- nrow(vT)
 
-rn <- rownames(precT)
+rn <- rownames(vT)
 
 a0 <- strsplit(rn[3], "-")[[1]][1] # Primer año en la serie
 a1 <- strsplit(rn[nn], "-")[[1]][1] # Último año en la serie
@@ -34,24 +35,34 @@ iFin <- max(grep(anioFin, rn))
 nel <- iFin - iIni + 1 # Número de elementos
 
 # Se hace el promedio por año de la tabla de datos (que empiezan a partir del renglón 3)
-panual <- apply(precT, 2, group.mean, ini=iIni, nels=nel)
+panual <- apply(vT, 2, trim.mean, ini=iIni, nels=nel)
 
 rr <- range(panual)
 
-aa <- ArreglaMtx(precT[1,], precT[2,], panual)
+if (mustGet("Guardar rango y detener [s/n]:", default = "N") %in% c("s", "S")) {
+    saveRDS(rr, file = "rangoGuardado.rds")
+    stop("TERMINANDO AQUI")
+}
+
+if (mustGet("Combinar rango, con guardado [s/n]:", default = "N") %in% c("s", "S")) {
+    rr <- range(rr, readRDS("rangoGuardado.rds"))
+    saveRDS(rr, file = "rangoGuardado.rds")
+}
+
+aa <- ArreglaMtx(vT[1,], vT[2,], panual)
 
 pp <- read.csv(cuencaF) # frontera de la cuenca
 
-Mbreaks <- pretty(range(panual),10)
+Mbreaks <- pretty(rr,10)
 
 # Rampa de colores en caso de usar esquema de colores
-Mcols <- colorRampPalette(c("cornsilk2","lightblue","royalblue3","darkblue"),space="rgb")
+Mcols <- colorRampPalette(c("cornsilk2","pink","orange", "red", "red4"),space="rgb")
 
 resp <- mustGet("Elija tipo gráfico: 1) Contornos, 2) Colores =>","1", c("1", "2"))
 
 t0 <- "Precip. anuales medias cuenca: " %,% cuenca
 
-fnam <- cuenca %,% "_" %,% anioIni %,% "_" %,% anioFin %,% "_PreAnual.png"
+fnam <- cuencaVar %,% "_" %,% anioIni %,% "_" %,% anioFin %,% "_Anual.png"
 
 if (file.exists(fnam)) file.remove(fnam)
 

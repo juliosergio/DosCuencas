@@ -284,23 +284,48 @@ resultado es una serie de precipitaciones promedio de la cuenca. De esta serie r
 y las anomalías de precipitación. Igual, con la serie de precipitaciones promedio se procede al cálculo de los índices SPIs y 
 los compartativos. Con toda esta información se producen los tres archivos gráficos que se han señalado como salidas del programa.
 
-## 6 DrawPrec.R
+## 6 TransfAcc.R
 
 ### 6.1 Objetivo
 
-El objetivo de este programa es la obtención de un gráfico con los niveles de precipitación anual promedio en un 
-área determinada.
+El objetivo de este programa es la tranformación de una tabla de promedios mensuales de precipitación
+diaria a precipitación acumulada en el mes.
 
 ### 6.2 Entradas
 
 El programa tiene como entrada un único archivo:
 
-* **\<Var-Cuenca-Pts-Ts\>.csv**. Este archivo se apega al formato descrito en la sección 1.3; sin embargo, no se trata de 
-cualquiera de los archivos que salen de esa estapa, sino espicíficamente de archivos de precipitación mensual acumulada durante 
+* **\<Var-Cuenca-Pts-Ts\>.csv**. Este archivo se apega al formato descrito en la sección 1.3; sin embargo, 
+no se trata de cualquiera de los archivos que salen de esa estapa, sino espicíficamente de archivos de 
+precipitación mensual acumulada durante algún período de varios años. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es ConchosPRE_mm.csv.
+
+### 6.3 Salidas
+
+* **\<Var-Cuenca-Pts-Ts\>Acc.csv**. Este archivo es uno de precipitación mensual acumulada durante 
 algún período de varios años. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es 
 ConchosPRE_mmAcc.csv.
 
-### 6.3 Salidas
+### 6.4 Funcionamiento
+
+Se parte de un archivo con los promedios diarios de preciítación por mes. Este programa calcula el acumulado
+de precipitación durante cada mes para todos los años del período.
+
+## 7 DrawPrec.R
+
+### 7.1 Objetivo
+
+El objetivo de este programa es la obtención de un gráfico con los niveles de precipitación anual promedio en un 
+área determinada.
+
+### 7.2 Entradas
+
+El programa tiene como entrada un único archivo:
+
+* **\<Var-Cuenca-Pts-Ts\>Acc.csv**. Este archivo se apega al formato descrito en la sección 6.3; se trata de  espicíficamente de archivos de precipitación mensual acumulada durante 
+algún período de varios años. Un ejemplo de este tipo de archivo es el archivo, contenido en este repositorio, es 
+ConchosPRE_mmAcc.csv.
+
+### 7.3 Salidas
 
 El programa tiene como salida un único archivo:
 
@@ -313,7 +338,7 @@ Conchos_PreAnual.csv, que se muestra también el la Fig. 7, a continuación.
 ![Prec anual](Conchos_PreAnual.png)
 
 
-### 6.4 Funcionamiento
+### 7.4 Funcionamiento
 
 El programa solicita interactivamente el nombre del archivo a procesar y después de acumular los valores mensuales en el archivo
 de entrada los muestra gráficamente, mediante un código de colores de manera semejante a como se muestra en la Fig. 7.

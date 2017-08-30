@@ -1,4 +1,5 @@
 # Combina dos listas intercalando sus elementos
+LEIDO.Intercala <- TRUE
 
 intercala <- function(L1, L2) {
     if (length(L1)==0)
