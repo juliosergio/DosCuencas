@@ -31,7 +31,7 @@ papproxfun <- function (...) approxfun(..., yleft = 0, yright = 1)
 
 
 ffunCreate <- function(x.data, aprxf=dapproxfun, accumulate = FALSE, ...) {
-    p <- density(x.data, bw = "SJ", ...)
+    p <- density(x.data, ...) # bw = "SJ", ...)
     p <- data.table(x=p$x, yy=p$y)
     if (accumulate) {
         d <- mean(p$x-data.table::shift(p$x), na.rm = T)
@@ -49,7 +49,7 @@ ffunCreate <- function(x.data, aprxf=dapproxfun, accumulate = FALSE, ...) {
 dfunCreate0 <- (function(...) approxfun(..., yleft = 0, yright = 0)) %cmp% (function(x, ...) density(x, bw = "SJ", ...))
 dfunCreate <- function(x.data, ...) ffunCreate(x.data, dapproxfun, ...)
 # Con splines
-dSfunCreate0 <- dsplinefun %cmp% (function(x, ...) density(x, bw = "SJ", ...))
+dSfunCreate0 <- dsplinefun %cmp% (function(x, ...) density(x, ...)) # bw = "SJ", ...))
 dSfunCreate <- function(x.data, ...) ffunCreate(x.data, dsplinefun, ...)
 
 
@@ -65,7 +65,7 @@ dSfunCreate <- function(x.data, ...) ffunCreate(x.data, dsplinefun, ...)
 #    plot(dfun, xlim=c(-0.1, 3.0))
 
 pfunCreate0 <- function(x.data, ...) {
-    p <- density(x.data, bw = "SJ", ...)
+    p <- density(x.data, ...) # bw = "SJ", ...)
     d <- mean(p$x-data.table::shift(p$x), na.rm = T)
     # p$ny <- cumsum(p$y)*d 
     # Integración trapecial
@@ -78,7 +78,7 @@ pfunCreate <- function(x.data, ...) ffunCreate(x.data, papproxfun, accumulate = 
 
 # Lo mismo con Splines
 pSfunCreate0 <- function(x.data, ...) {
-    p <- density(x.data, bw = "SJ", ...)
+    p <- density(x.data, ...) # bw = "SJ", ...)
     d <- mean(p$x-data.table::shift(p$x), na.rm = T)
     # p$ny <- cumsum(p$y)*d 
     # Integración trapecial
@@ -95,7 +95,7 @@ test <- function() {
     
     # Densidad
     # Solo para averiguar los límites
-    p <- density(x, bw = "SJ")
+    p <- density(x) # , bw = "SJ")
     ff <- dfunCreate(x)
     ff0 <- dSfunCreate(x) # Splines
 

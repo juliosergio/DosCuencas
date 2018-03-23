@@ -193,7 +193,9 @@ creaCumECDF <- ecdf #* function(x) {
 
 creaCumFuncts <- function(
     precipitation, # La precipitación
-    ffcreadora     # funcion creadora de funciones una de {creaCumGamma, creaCumECDF}
+    ffcreadora     # funcion creadora de funciones una de {creaCumGamma, creaCumECDF} o incluso 'pfunCreate()', 
+                   # que es una función para crear funciones de distribución a partir de las funciones de 
+                   # densidad 'kernel' (https://en.wikipedia.org/wiki/Kernel_density_estimation)
                    #  o creaGamma, para función no acumulativa - para ilustraciones
 ) {
     # Crea la familia de funciones acumulativas de distribución
@@ -271,6 +273,9 @@ getSPI <- function(precipitation, ffcreadora) {
 # La siguiente función toma una serie de precipitaciones mensuales, hace los k-promedios y luego encuentra el SPI
 getSPInew <- function(precipitation, ffcreadora, k, ...) getSPI(getPrecOnTimescale(precipitation, k, ...), ffcreadora)
 
+# La siguiente función toma una serie de precipitaciones mensuales, hace los k-promedios y luego encuentra el SPI,
+# es igual que la anterior pero con un default
+getSPInew_for_k <- function(precipitation, k, ffcreadora=creaCumECDF, ...) getSPI(getPrecOnTimescale(precipitation, k, ...), ffcreadora)
 
 test <- function() {
     #generate some sample recipitation values using a weibull distribution
@@ -297,7 +302,9 @@ test <- function() {
     
     # Hagamos prueba con la nueva forma de hacerlo
     
-    nspi <- sapply(1:12, function(i) getSPInew(precipitation, creaCumECDF, i))
+    # nspi <- sapply(1:12, function(i) getSPInew(precipitation, creaCumECDF, i))
+    nspi <- sapply(1:12, function(i) getSPInew_for_k(precipitation, i))
+    
     
     filled.contour(dates,1:12,nspi,col=spi.cols(11),xlab="",ylab="time-scale (months)",cex.lab=1.7,font.axis=2,font.lab=2,levels=spi.breaks,key.title="SPI")
     title(main="NNNsample SPI",cex.main=2)

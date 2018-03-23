@@ -14,7 +14,41 @@ composite <- function(f,g) function(...) f(g(...))
 
 `%,%` <- function(x, y) paste0(x, y) # Operador de concatenación de cadenas
 
-`%//%` <- function(x,y) as.integer(x/y) # División entera
+# `%//%` <- function(x,y) as.integer(x/y) # División entera: no necesaria existe %/%
+
+
+
+# MODULACIONES PARA expand.grid
+indexXG <- function(i, j, n, base=0) {
+    # Sean dos vectores A, B, con dimensiones n y m
+    # Si se hace C <- expand.grid(A,B),
+    # Sea a el elemento con índice i en A y
+    #     b el elemento con índice j en B
+    # Qué lugar (renglón) le corresponde al elemento (a,b)
+    # en C? ... esa es la pregunta que responde esta función
+    # llamándola así:  indexXG(i,j,n,1)
+    # ==================
+    # if (base) i <- i-base; j <- j-base}
+    # i <- ifelse(base, i-base, i)
+    # j <- ifelse(base, j-base, j)
+    i <- i - base
+    j <- j - base
+    # ind <- j*n + i 
+    # ind <- ifelse(base, ind+base, ind) 
+    # return(ind)
+    j*n + i + base
+}
+
+indexXGG <- function(Mi, Mn, base=0) {
+    # Generalización de la función anterior
+    # Mi y Mn son matrices; cada renglón representa 
+    # un caso, cada columna corresponde a cada uno de los
+    # índices (i,j,k ...) o (n,m,r, ...)
+    
+    Mi <- Mi - base
+    Mn <- cbind(1, t(apply(Mn, 1, cumprod))[,-ncol(Mn), drop=F])
+    apply(Mi*Mn, 1, sum)+base
+}
 
 
 bdir <- "" # YA-NO>> "E:/RR/"
@@ -83,6 +117,14 @@ trim.mean <- function(x, ini=1, nels=length(x)-ini+1, ...) {
     mean(x[ini:fin], ...)
 }
 
+mov.mean <- function(x,n) {
+    j <- seq_along(x)
+    i <- j+1-n
+    r <- rep(as.numeric(NA), length(x))
+    for (k in j)
+        if (i[k]>=1) r[k] <- mean(x[i[k]:k])
+    r
+}
 
 # Funciones para la moda
 
@@ -268,6 +310,20 @@ E_anxIn <- "[^[:digit:]]*[[:digit:]]+[,.]([[:digit:]]+)[^[:digit:]]*"
 E_excInt <- "^[[:digit:]]+$"
 E_Fecha <- "^([[:digit:]]+-){2}[[:digit:]]+$"
 
+# Para que un patrón corresponda incluya exclusivamente todo el
+# string de prueba:
+Exclusivo <- function(s) paste0("^", s, "$")
+
+# PARA Lista de Números
+# Definición simple de un número
+E_Num <- "[[:blank:]]*-?[[:digit:]]+\\.?[[:digit:]]*[[:blank:]]*"
+
+# Lista de "algo" separada por comas
+
+E_list <- function(algo) paste0("(", algo, ",)*", algo)
+
+L_Num <- Exclusivo(E_list(E_Num)) # La lista
+
 sepElts <- ffun(strsplit, E_comaYbl_O_Yg)
 
 # ------------------------------------
@@ -333,6 +389,12 @@ ExtraeNAnx <- function (X) sapply(extrae(E_anxIn,X), '[', 2)
 
 # Evaluación de strings:
 evalstr <- function(s, ...) eval(parse(text=s), ...)
+
+# una variable como string
+nameChar <- function(v1) {
+    deparse(substitute(v1))
+}
+
 
 # Operaciones entre miembros de la subTabla:
 fform <- function (subTabla, expr, nvar="X", nfun="forceNum") {
